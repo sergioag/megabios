@@ -1,0 +1,570 @@
+$Title ('DTC/PC BIOS IBMINC Include File Dummy Assembly V1.0')
+;$Pagelength (80) Pagewidth (132) Debug Nogen
+;Name Ibminc
+
+
+;    Author:	  Don K. Harrison
+
+;    Start date:  December 28, 1983	  Last edit:  December 28, 1983
+
+;		************************
+;		*  Module Description  *  
+;		************************
+;
+;	This module is a dummy assembly of the include file used
+;    by all modules.
+
+
+
+
+
+;	  (c) Display Telecommunications Corporation, 1983
+;			All Rights Reserved
+$Eject
+
+
+;		**********************
+;		*  Revision History  *  
+;		**********************
+
+
+
+
+
+
+
+$Eject
+
+;	Ibminc.tmp file same as IbmInc except $Nolist command commented Out
+;$Include (Ibminc.tmp)
+;		*************************
+;		*  Global Include File  *  
+;		*************************
+$Nolist
+
+
+;		************
+;		*  Macros  *  
+;		************
+
+		%*Define (Bus(Value))
+		( Mov 	Al, %Value
+		  Out	0C0H,Al )
+
+		%Set (BugFix, 0)	; enable workarounds for existing bugs
+
+$Eject
+
+;		*************
+;		*  Equates  *
+;		*************
+
+;		******************************
+;		*  System Board Peripherals  *  
+;		******************************
+		
+;		********************
+;		*  DMA Controller  *  
+;		********************
+
+PortDMACommand	Equ	8		;Command register
+PortDMAMode	Equ	0BH		;Mode register
+PortDMARequest	Equ	09H		;Software request register
+PortDMAMaskSngl	Equ	0AH		;Single channel mask
+PortDMAMaskGlbl	Equ	0FH		;Global channel mask
+PortDMAStatus	Equ	08H		;Status register
+PortDMACh0Base	Equ	0		;Channel 0 base register
+PortDMACh0Count	Equ	1		;Channel 0 word court register
+PortDMACh1Base	Equ	2		;Channel 1 base register
+PortDMACh1Count	Equ	3		;Channel i word count register
+PortDMACh2Base	Equ	4		;Channel 2 base register
+PortDMACh2Count	Equ	5		;Channel 2 word count register
+PortDMACh3Base	Equ	6		;Channel 3 base register
+PortDMACh3Count	Equ	7		;Channel 3 word count register
+PortDMAToggle	Equ	0CH		;Toggle byte pointer flip flop
+PortDMAReset	Equ	0DH		;Master clear
+PortDMAClrMask	Equ	0EH		;Global mask clear
+PortPageChan1	Equ	83H		;Channel 1 upper page reg. address
+PortPageChan2	Equ	81H		;Channel 2 upper page reg. address
+PortPageChan3	Equ	82H		;Channel 3 upper page reg. address
+
+
+;		**************************
+;		*  Interrupt Controller  *  
+;		**************************
+
+PortPICICW1	Equ	20H		;Initialization command word 1
+PortPICICW2	Equ	21H		;Initialization command word 2
+PortPICICW3	Equ	21H		;Initialization command word 3
+PortPICICW4	Equ	21H		;Initialization command word 4
+PortPICOCW1	Equ	21H		;Operation command word 1
+PortPICOCW2	Equ	20H		;Operation command word 2
+PortPICOCW3	Equ	20H		;Operation command word 3
+PortNMIMask	Equ	0A0H		;Non maskable interrupt mask
+NMIMask		Equ	0		;Mask command
+NMIUnmask	Equ	80H		;Unmask command
+PicEoi		Equ	20H		;End of interrupt
+
+;		*******************
+;		*  Counter Timer  *  
+;		*******************
+
+PortCTCLoadCh0	Equ	40H		;Load channel 0
+PortCTCLoadCh1	Equ	41H		;Load channel 1
+PortCTCLoadCh2	Equ	42H		;Load channel 2
+PortCTCMode	Equ	43H		;Write mode word
+PortCTCReadCh0	Equ	40H		;Read channel 0
+PortCTCReadCh1	Equ	41H		;Read channel 1
+PortCTCReadCh2	Equ	42H		;Read channel 2
+CTCRefreshDiv	Equ	18		;Real time clock divisor constant
+$Eject
+;		***************************************
+;		*  Programmable Peripheral Interface  *  
+;		***************************************
+
+;		************
+;		*  Port A  *  
+;		************
+PortPPIPortA	Equ	60H		;Parallel Port A
+PortKBYDScan	Equ	60H		;Port A is keyboard scan code
+
+;		************
+;		*  Port B  *  
+;		************
+PortPPIPortB	Equ	61H		;Parallel Port B
+
+;		************************************
+;		*  Control and Flag Bits (B Port)  *  
+;		************************************
+PPIBSpkrGate	Equ	00000001B	;Speaker gate bit
+PPIBSpkrData	Equ	00000010B	;Speaker data bit
+PPIBSpare	Equ	00000100B	;Unused bit position
+PPIBConfigSlct	Equ	00001000B	;Select lower (0) or upper (1) switches
+PPIBDisSysParit	Equ	00010000B	;System board parity disable bit
+PPIBDisIOParity	Equ	00100000B	;1/0 channel parity disable bit
+PPIBRelKbydClk	Equ	01000000B	;Keyboard clock line release bit
+PPIBClearKbyd	Equ	10000000B	;Keyboard clear
+PPIBStartUpMode	Equ	10100101B	;PPIBSpkrGate +
+					;...PPIBSpare +
+					;...PPIBDisiOParity +
+					;...PPIBClearKbyd
+;		************
+;		*  Port C  *  
+;		************
+PortPPIPortC	Equ	62H		;Parallel Port C
+PortConfigSw	Equ	62H		;Port C (lower) are config. switches
+
+;		************************************
+;		*  Control and Flag Bits (C Port)  *
+;		************************************
+PPICLoopPost	Equ	00000001B	;Loop on post bit
+PPICNPInstalled	Equ	00000010B	;Numeric processor installed
+PPICRAM		Equ	00001100B	;Ram size bits
+PPICDisplay	Equ	00000011B	;Display type bits
+PPICDiskettes	Equ	00001100B	;Floppy disk type bits
+PPICSpk		Equ	00010000B	;Speaker feed back bit
+PPICCTCCheDut	Equ	00100000B	;Output of CTC channel 2
+PPICIOChk	Equ	01000000B	;Status of I/O check flip flop
+PPICRAMChk	Equ	10000000B	;Status of system board parity f/f
+
+;		******************
+;		*  Control Port  *
+;		******************
+PortPPIMode	Equ	63H		;Write mode word
+PPIBStdMode	Equ	99H		;Standard mode word = 99H
+
+$Eject
+
+;		*********************************
+;		*  Option Adapter Peripherials  *
+;		*********************************
+
+;		*********************
+;		*  Game Controller  *
+;		*********************
+
+PortGCAButtens	Equ	201H		;Game paddle button status
+PortGCAOneShots	Equ	201H		;Game paddle one shot outputs
+PortGCAFire	Equ	201H		;Fire all one shots
+
+;		********************
+;		*  Expansion Unit  *  
+;		********************
+
+PortEXPBusTest	Equ	210H		;Write/read bus test port
+PortEXPHiAdrTst	Equ	211H		;Read high order address latch
+PortExPWaitTest	Equ	211H		;Clear wait test latch
+PortEXPLoAdrTst	Equ	212H		;Read high order address latch
+PortEXPEnable	Equ	213H		;1=enable expansion unit, 0=disable
+PortEXxPStatus	Equ	213H		;Read status of expansion unit
+
+;		***************************
+;		*  Control and Flag Bits  *  
+;		***************************
+
+EXPEnStatus	Equ	00000001B	;1=enabled, 0=disabled
+EXPWaitRqFlag	Equ	00000010B	;State of wait state request flag
+EXPSwitches	Equ	11110000B	;Dip switch state
+
+$Eject
+;		********************************************
+;		*  Asynchronous Communications Controller  *  
+;		********************************************
+
+;		*********************
+;		*  Primary Adapter  *  
+;		*********************
+
+PortSio1Rxdata	Equ	3F8H		;Receive data  DLAB=0
+PortSio1Txdata	Equ	3F8H		;Transmit data DLAB=0
+PortSio1BaudLo	Equ	3F8H		;Receive data  DLAB=1
+PortSio1BaudHi	Equ	3F9H		;Receive data  DLAB=1
+PortSio1IntReg	Equ	3F9H		;Interrupt enable register
+PortSio1IntID	Equ	3FAH		;Interrupt ID register
+PortSio1LCR	Equ	3FBH		;Line control register
+PortSio1MCR	Equ	3FCH		;Modem control register
+PortSio1LSR	Equ	3FDH		;Line status register
+PortSio1MSE	Equ	3FEH		;Modem status register
+
+;		***********************
+;		*  Secondary Adapter  * 
+;		***********************
+
+PortSio2Rxdata	Equ	2F8H		;Receive data  DLAB=0
+PortSio2Txdata	Equ	2F8H		;Transmit data DLAB=0
+PortSio2BaudLo	Equ	2F8H		;Receive data  DLAB=1
+PortSio2BaudHi	Equ	2F9H		;Receive data  DLAB=1
+PortSio2IntReg	Equ	2F9H		;Interrupt enable register
+PortSio2IntID	Equ	2FAH		;Interrupt ID register
+PortSio2LCR	Equ	2FBH		;Line control register
+PortSio2MCR	Equ	2FCH		;Modem control register
+PortSio2LSR	Equ	2FDH		;Line status register
+PortSio2MSE	Equ	2FEH		;Modem status register
+$Eject
+;		***************************
+;		*  Control and Flag Bits  * 
+;		***************************
+
+Sio5Bits	Equ	00000000B	;5 data bits
+Sio6Bits	Equ	00000001B	;6 data bits
+Sio7Bits	Equ	00000010B	;7 data bits
+Sio8Bits	Equ	00000011B	;8 data bits
+Sio2StopBitS	Equ	00000100B	;Set 2 stop bits
+SioEnableParity	Equ	00001000B	;Enable parity
+SioEvenParity	Equ	00010000B	;Set even parity if parity enabled
+SioStickParity	Equ	00100000B	;Parity bit follows bit 4 of this byte
+SioBreakBit	Equ	01000000B	;i sets Tx output marking
+SioAccessBrgDiv	Equ	10000000B	;Set hi to access BRG divisor latch
+SioRxReady	Equ	00000001B	;Receiver ready
+SioOverrun	Equ	00000010B	;Receive overrun
+SioParityError	Equ	00000100B	;Receive parity error
+SioFramingErr	Equ	00001000B	;Reveive parity error
+SioBreakDetect	Equ	00010000B	;Receive line is in break condition
+SioTxReady	Equ	00100000B	;Transmitter holding register empty
+SioTxEmpty	Equ	00100000B	;All data bits have cleared transmitter
+SioNoIntPending	Equ	00000001B	;No interrupt condition exists
+SioRxLineInt	Equ	00000110B	;Receiver caused interrupt
+SioRxDataInt	Equ	00000100B	;Reception of data char. caused int.
+SioTxReadyInt	Equ	00000010B	;Transmitter register went ready
+SioModemInt	Equ	00000000B	;Modem status change caused interrupt
+SioEnabRxInt	Equ	00000001B	;Enable data available interrupt
+SioEnabTxInt	Equ	00000010B	;Enable Tx register empty interrupt
+SioEnabStatInt	Equ	00000100B	;Enable status change interrupt
+SioEnabModemInt	Equ	00001000B	;Enable modem change interrupt
+SioEnabDTR	Equ	00000001B	;Turn on DTR
+SioEnabRTS	Equ	00000010B	;Turn on RTS
+SioEnabOUT1	Equ	00000100B	;Turn on OUT1
+SioEnabOUT2	Equ	00001000B	;Turn on OUT2
+SioEnabLoop	Equ	00010000B	;Turn on Loop
+SioDeltaCTS	Equ	00000001B	;Set if CTS input changed state
+SioDeltaDSR	Equ	00000010B	;5et if DSR input changed state
+SioDeltaRI	Equ	00000100B	;Set if RI input changed state
+SioDeltaRX	Equ	00001000B	;Set if RX input changed state
+SioCTS		Equ	00010000B	;State of CTS input
+SioDSR		Equ	00100000B	;State of DSR input
+SioRI		Equ	01000000B	;State of RI input
+SioRX		Equ	10000000B	;State of RX input
+			
+;		******************************	
+;		*  Baud Rate Divisor Values  * 
+;		******************************
+
+Sio50Baud	Equ	2304		;Divisor value for 50 baud
+Sio75Baud	Equ	1536		;Divisor value for 75 baud
+Sio110Baud	Equ	1047		;Divisor value for 110 baud
+Sio134Baud	Equ	857		;Divisor value for 134 baud
+Sio150Baud	Equ	768		;Divisor value for 150 baud
+Sio300Baud	Equ	384		;Divisor value for 300 baud
+Sio600Baud	Equ	192		;Divisor value for 600 baud
+Sio1200Baud	Equ	96		;Divisor value for 1200 baud
+Sio1800Baud	Equ	64		;Divisor value for 1800 baud
+Sio2000Baud	Equ	58		;Divisor value for 2000 baud
+Sio2400Baud	Equ	48		;Divisor value for 2400 baud
+Sio3600Baud	Equ	32		;Divisor value for 360Q baud
+Sio4800Baud	Equ	24		;Divisor value for 4800 baud
+Sio7200Baud	Equ	16		;Divisor value for 7200 baud
+Sio9600Baud	Equ	12		;Divisor value for 9600 baud
+$Eject
+;		**********************
+;		*  Prototyping Card  *
+;		**********************
+
+PortProtoBase	Equ	300H		;Base address of prototype card
+
+;		***************************
+;		*  Fixed Disk Controller  *
+;		***************************
+
+PortHDCData	Equ	320H		;Read and write data port
+PortHDCStatus	Equ	321H		;Read controller status
+PortHDCReset	Equ	321H		;Reset the controller (write)
+PortHDCSelect	Equ	322H		;Generate controller-select pulse
+PortHDCDMAInt	Equ	323H		;Write pattern to DMA and Int register
+
+;		**********************
+;		*  Parallel Printer  *
+;		**********************
+
+PortPrint2Data	Equ	378H		;Printer data
+PortPrint2Stat	Equ	379H		;Printer status
+PortPrint2Cntl	Equ	37AH		;Printer control
+
+;		***************************
+;		*  Control and Flag Bits  *
+;		***************************
+
+PrintStrobe	Equ	00000001B	;Printer strobe (low active)
+PrintAutoFeed	Equ	00000010B	;Auto line feed (low active)
+PrintInit	Equ	00000100B	;Initialize printer (low active)
+PrintSelectIn	Equ	00001000B	;Select the printer (low active)
+PrintIntEnable	Equ	00010000B	;Enable printer interrupts
+PrintError	Equ	00001000B	;Printer error status bit
+PrintSelectOut	Equ	00010000B	;Printer selected bit
+PrintPaperOut	Equ	00100000B	;Printer paper out status bit
+PrintAck	Equ	01000000B	;Printer signal state (low active)
+PrintBusy	Equ	10000000B	;Printer busy signal state (low active)
+$Eject
+;		******************************
+;		*  Monochrome Video Adapter  *
+;		******************************
+
+PortMonoIndex	Equ	3B4H		;6845 Index register
+PortMonoData	Equ	3B5H		;6845 Control registers
+PortMonoCntl1	Equ	3B8H		;Mode control port
+PortMonoStatus	Equ	3BAH		;Sync and video states
+PortPrint1Data	Equ	3BCH		;Mono board printer data
+PortPrint1Stat	Equ	3BDH		;Mono board printer status
+PortPrint1Cntl	Equ	3BEH		;Mono board printer contre!
+MonoScreen	Equ	0B0000H	 	;Start of monochrom adapter memory
+
+;		***************************
+;		*  Control and Flag Bits  *
+;		***************************
+
+MonoResMode	Equ	00000001B	;Set high resolution mode
+MonoVideoEnable	Equ	00001000B	;Enable monochrome video
+MonoBlinkEnable	Equ	00100000B	;Enable blinking
+MonoHorizState	Equ	00000001B	;Horizontal pulse state
+MonoVideoState	Equ	00001000B	;Video output state
+
+;		*****************************
+;		*  Register Pointer Values  *
+;		*****************************
+
+MonoHorizTotal	Equ	0		;Pointer to horizontal total register
+MonoHorizDispl	Equ	1		;Pointer to horizontal displayed
+MonoHorizSyncP	Equ	2		;Pointer to horizontal sync position
+MonoHorizSyncW	Equ	3		;Pointer to horizontal sync width
+MonoVertTotal	Equ	4		;Pointer to vertical total
+MonoVertTotAdj	Equ	5		;Pointer to vertical total adjust
+MonoVertDispl	Equ	6		;Pointer to vertical displayed
+MonoVertSync	Equ	7		;Pointer to vertical sync position
+MonoInterlace	Equ	8		;Pointer to interlace mode bit
+MonoMaxScanLine	Equ	9		;Pointer to maximum scan line number
+MonoCursorStart	Equ	10		;Pointer to cursor start scan line
+MonoCursorEnd	Equ	11		;Pointer to cursor end scan line
+MonoStartHigh	Equ	12		;Pointer to screen start address high
+MonoStartLow	Equ	13		;Pointer to screen start address low
+CursorHigh	Equ	14		;Pointer to cursor position address hi
+CursorLow	Equ	15		;Pointer to cursor position address low
+$Eject
+
+;		****************************
+;		*  Color Graphics Adapter  *
+;		****************************
+
+PortColorMode	Equ	3D8H		;Color board mode select register
+PortColorColor	Equ	3D9H		;Color select register
+PortColorStatus	Equ	3DAH		;Color status register
+PortColorLPClr	Equ	3DBH		;Clear light pen detector
+PortColorLPSet	Equ	3DCH		;Preset light pen detector
+PortColorIndex	Equ	3D4H		;6845 Index register
+PortColorData	Equ	3D5H		;6845 Control registers
+
+;		***************************
+;		*  Control and Flag Bits  *
+;		***************************
+
+Color40x25ABW	Equ	2CH		;48x25 alphanumeric black and white
+Color40x25ACo	Equ	28H		;40x25 alphanumeric color
+Color80x25ABW	Equ	2CH		;80x25 alphanumeric black and white
+Color80x25ACo	Equ	29H		;80x25 alphanumeric color
+Color320x200GBW	Equ	0EH		;320x200 graphics black and white
+Color320x200GCo	Equ	0AH		;320x200 graphics color
+Color640x200GBW	Equ	1EH		;640x200 graphics black and white
+ColorBkgnd	Equ	00001111B	;Background or boarder selection
+ColorIntense	Equ	00100000B	;Select intensified colors
+ColorPalette	Equ	00100000B	;Palette toggle bit
+
+$Eject
+;		 **********************************
+;		 *  Flexible Diskette Controller  *
+;		 **********************************
+
+PortFDCData	Equ	3F5H		;Floppy controller data register
+PortFDCStatus 	Equ	3F4H		;Floppy controller status register
+PortFDCAdptMode Equ	3F2H		;Adapter mode register
+
+;		 ***************************
+;		 *  Control and Flag Bits  *
+;		 ***************************
+
+FDCModeDrive0	Equ	00000100B	;Select drive 0
+FDCModeDrive1	Equ	00000101B	;Select drive 1
+FDCModeDrive2	Equ	00000110B	;Select drive 2
+FDCModeDrive3	Equ	00000111B	;Select drive 3
+FDCModeReset	Equ	00000000B	;Reset FDController
+FDCModeIntDmaEn	Equ	00001100B	;Enable FDC interrupts and dma action
+FDCModeHotor0	Equ	00010100B	;Turn on drive 0
+FDCModeMotor1	Equ	00100100B	;turn on drive 1
+FDCModeMotor2	Equ	01000100B	;Turn on drive 2
+FDCModeMotor3	Equ	10000100B	;Turn on drive 3
+FDCContSK	Equ	00100000B	;Skip deleted mark bit
+FDCContMF	Equ	01000000B	;MFM Select bit
+FDCContMT	Equ	10000000B	;Multi-track bit
+FDCContUS0	Equ	00000001B	;Unit select bit 0
+FDCContUS1	Equ	00000010B	;Unit select bit 1
+FDCContHD	Equ	00000100B	;Head select bit
+FDCStatIC	Equ	11000000B	;Interrupt code status bits
+FDCStatSE	Equ	00100000B	;Seek end status bit
+FDCStatEC	Equ	00010000B	;Equipment check status bit
+FDCStatNR	Equ	00001000B	;Not ready status bit
+FDCStatHD	Equ	00000100B	;Head state bit
+FDCStatDS	Equ	00000011B	;Drive state bits
+FDCStatEN	Equ	10000000B	;End of cylinder status bit
+FDCStatDE	Equ	00100000B	;Data error status bit
+FDCStatOR	Equ	00010000B	;Overrun status bit
+FDCStatND	Equ	00001000B	;No data status bit
+FDCStatNW	Equ	00000100B	;Not writable status bit
+FDCStatMA	Equ	00000011B	;Missing address mark status bit
+FDCStatCM	Equ	11000000B	;Control mark status bit
+FDCStatDD	Equ	00100000B	;Data error in data field status bit
+FDCStatWC	Equ	00010000B	;Wrong cylinder status bit
+FDCStatSH	Equ	00001000B	;Scan equal hit status bit
+FDCStatSN	Equ	00000100B	;Scan not satisfied status bit
+FDCStatBC	Equ	00000011B	;Bad cylinder status bit
+FDCStatMD	Equ	10000000B	;Missing address mark in status bit
+FDCStatFT	Equ	00100000B	;Fault status bit
+FDCStatWP	Equ	00010000B	;Write protect status bit
+FDCStatRY	Equ	00000100B	;Ready status bit
+FDCStatT0	Equ	00000010B	;Track 0 status bit
+FDCStatTS	Equ	00000001B	;Two sice status bit
+FDCN		Equ	2		;Number of data bytes per sector
+FDCSC		Equ	8		;Sectors per cylinder
+FDCHUT		Equ	15		;Head unload time
+FDCSRT		Equ	12		;Step rate time
+FDCGPLFormat	Equ	5		;Gap length (during format)
+FDCGPLReadWrite Equ	42		;Gap length (during read or write)
+FDCHLT		Equ	1		;Head load time
+
+
+$Eject
+
+;		*********************************
+;		*  Vector Location Definitions  *
+;		*********************************
+
+TrapZeroDiv	Equ	0		;Divide by zero vector
+TrapSngStp	Equ	1		;Single step vector
+TrapNMI		Equ	2		;Non maskable interrupt vector
+TrapBkpt	Equ	3		;Breakpoint interrupt vector
+TrapOvf		Equ	4		;Overflow interrupt vector
+TrapPrintScreen	Equ	5		;Print screen vector
+TrapUndef1	Equ	6		;Undefined vector #1
+TrapUndef2	Equ	7		;Undefined vector #2
+TrapTimer	Equ	8		;Timer interrupt
+Trapkeyboard	Equ	9		;Keyboard interrupt
+TrapIRQ2	Equ	10		;Interrupt 2 interrupt
+TrapSio2	Equ	11		;Serial channel 2 interrupt
+TrapSio1	Equ	12		;Serial channel 1 interrupt
+TrapHDisk	Equ	13		;Hard disk interrupt
+TrapFDisk	Equ	14		;Floppy disk interrupt
+TrapPrinter	Equ	15		;Printer interrupt
+TrapVideo	Equ	16		;Video driver trap vector
+TrapEquip	Equ	17		;Equipment query vector
+TrapMemorySize	Equ	18		;Memory size query vector
+TrapFDDriver	Equ	19		;Diskette driver vector
+TrapSIODriver	Equ	20		;Serial interface vector
+TrapCassette	Equ	21		;Cassette (dummy routine)
+TrapKeyDrive	Equ	22		;Keyboard driver vector
+TrapPrintDrive	Equ	23		;Printer driver vector
+TrapBasic	Equ	24		;Cassette basic vector
+TrapBoot	Equ	25		;Bootstrap loader trap vector
+TrapTOD		Equ	26		;Time of day vector
+TrapKeyBreak	Equ	27		;Keyboard break address
+TrapTimerBreak	Equ	28		;Timer break address
+TrapVidParams	Equ	29		;Video paraseters
+TrapDiskParams	Equ	30		;Disk parameters
+TrapVideoExt	Equ	31		;Video external pointer
+
+
+$Eject
+
+;		*************************************
+;		*  Diskette Driver Command Equates  *
+;		*************************************
+
+DiskCmdReset	Equ	0
+DiskCmdStatus	Equ	1
+DiskCmdRead	Equ	2
+DiskCmdWrite	Equ	3
+DiskCadVerify	Equ	4
+DiskCmdFormat	Equ	5
+
+$Eject
+
+;		**********************************
+;		*  Video Driver Command Equates  *
+;		**********************************
+
+VidCmdInit	Equ	0
+VidCmdCurType	Equ	1
+VidCmdCurPos	Equ	2
+VidCmdRdCurPos	Equ	3
+VidCmdRdLPenPos	Equ	4
+VidCmdSelPage	Equ	5
+VidCmdScrollUp	Equ	6
+VidCmdScrollDn	Equ	7
+VidCmdRdCurChAt	Equ	8
+VidCmdWrCurChAt	Equ	9
+VidCmdWrCurCh	Equ	10
+VidCmdSetPalet	Equ	11
+VidCmdWrDot	Equ	12
+VidCmdRdDot	Equ	13
+VidCmdWrTTY	Equ	14
+VidCmdInfo	Equ	15
+
+$Eject
+
+;		***************************************
+;		*  Serial I/O Driver Command Equates  *
+;		***************************************
+
+SioCmdInit	Equ	0
+SioCmdSend	Equ	1
+SioCmdReceive	Equ	2
+SioCmdStatus	Equ	3
+
+$List
+
+;End
