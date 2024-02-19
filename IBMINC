@@ -5,14 +5,13 @@ $Nolist
 
 
 ;		************
-;		*  Macros  *  
+;		*  Macros  *
 ;		************
 
 		%*Define (Bus(Value))
-		( Mov 	Al, %Value
+		( Mov 	Al,%Value
 		  Out	0C0H,Al )
 
-		%Set (BugFix, 0)	; enable workarounds for existing bugs
 
 $Eject
 
@@ -21,11 +20,11 @@ $Eject
 ;		*************
 
 ;		******************************
-;		*  System Board Peripherals  *  
+;		*  System Board Peripherals  *
 ;		******************************
 		
 ;		********************
-;		*  DMA Controller  *  
+;		*  DMA Controller  *
 ;		********************
 
 PortDMACommand	Equ	8		;Command register
