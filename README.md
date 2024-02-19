@@ -1,6 +1,6 @@
-# MEGA-BIOS V1.0
+# MEGA-BIOS V1.0 Reconstruction Project
 
-### Display Telecommunications Corporation (DTC) MEGA-BIOS V1.0 Reconstruction Project
+### Display Telecommunications Corporation (DTC) MEGA-BIOS V1.0
 
 Copyright &copy; 1983 Display Telecommunications Corporation (DTC)
 
