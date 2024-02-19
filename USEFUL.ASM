@@ -62,7 +62,8 @@ $Eject
 AsciiCarriage	Equ	0DH			;Carriage return
 AsciiLineFeed	Equ	0AH			;Line feed
 
-$Include (IbmInc.Asm)
+;$Include (IbmInc.Asm)
+$Include (IbmInc)
 ;		*************************
 ;		*  Global Include File  *
 ;		*************************

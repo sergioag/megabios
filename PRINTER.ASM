@@ -49,7 +49,8 @@ $Eject
 
 		;	All Equates in include file: IbmInc
 
-$Include (Ibminc.Asm)	
+;$Include (Ibminc.Asm)
+$Include (Ibminc)
 ;		*************************
 ;		*  Global Include File  *
 ;		*************************

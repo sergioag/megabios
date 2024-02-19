@@ -51,7 +51,8 @@ AsciiLineFeed		Equ	0AH		;Ascii line feed
 AsciiCarriageReturn	Equ	0DH		;Ascii carriage return
 
 
-$Include (Ibminc.Asm)
+$Include (Ibminc)
+;$Include (Ibminc.Asm)
 ;		*************************
 ;		*  Global Include File  *
 ;		*************************

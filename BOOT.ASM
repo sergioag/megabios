@@ -48,13 +48,11 @@ BootOffset	Equ	7C00H		;Location of loaded boot code
 AsciiCarriage	Equ	0DH		;Carriage return code
 AsciiLineFeed	Equ	0AH		;Line feed code
 
-$Nolist
-$Include (IbmInc.Asm)
+$Include (IbmInc)
 ;		*************************
 ;		*  Global Include File  *
 ;		*************************
-;$Nolist
-$List
+$Nolist
 $Eject
 	
 ;		*******************

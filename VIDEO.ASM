@@ -54,7 +54,7 @@ AsciiLineFeed	Equ	0AH			;...for
 AsciiCarriage	Equ	0DH			;...TTY
 AsciiBell	Equ	07H			;...procedure
 
-$Include (IbmInc.Asm)
+$Include (IbmInc)
 ;		*************************
 ;		*  Global Include File	*
 ;		*************************
@@ -325,7 +325,11 @@ SetModeJump1:
 
 		Xor	Bh,Bh			;Form index into table (Bl=mode)
 		Push	Bx			;Save Bx=crt mode
-		Mov	Bl,byte ptr Cs:OffsetTable[Bx]	;Load the offset
+%If (%BugFix Eq 0) Then (
+		Mov	Bl,OffsetTable[Bx]	;Load the offset
+) Else (
+		Mov	Bl,Byte Ptr Cs:OffsetTable[Bx]	;Load the offset
+) fI
 		Add	Si,Bx			;...and point at right list
 		Mov	Cx,16			;Do 16 bytes
 
@@ -863,8 +867,11 @@ HWaitRead:
 HWaitRead2:
 		In	Al,Dx			;Get status
 		Test	Al,1			;...gone back hi?
-		;Jz	HWaitRead		;...wait till it does
+%If (%BugFix Eq 0) Then (
+		Jz	HWaitRead		;...wait till it does
+) Else (
 		Jz	HWaitRead2		;...wait till it does (BUGFIX)
+) fI
 		Lodsw				;...read it quick
 		Pop	Ds			;Restore Ds
 		Assume 	Ds:BiosDataArea		;...and tell ASMBS
