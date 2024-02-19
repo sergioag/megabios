@@ -24,6 +24,7 @@ Name Printer
 
 $Eject
 
+
 ;		**********************
 ;		*  Revision History  *
 ;		**********************
@@ -50,10 +51,6 @@ $Eject
 		;	All Equates in include file: IbmInc
 
 $Include (Ibminc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-;$Nolist
 $Eject
 
 ;		*******************

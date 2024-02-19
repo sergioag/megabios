@@ -8,6 +8,7 @@ Name Boot
 ;	Start date:	October 25, 1983	Last edit:	December 27, 1983
 
 
+
 ;		************************
 ;		*  Module Description  *
 ;		************************
@@ -15,6 +16,7 @@ Name Boot
 ;	  This module is called by interrupt 19 (TrapBoot).
 ;    It's function is to read in the boot image from the diskette
 ;    and transfer control to it.
+
 
 
 ;	     (c) Display Telecommunications Corporation, 1983
@@ -31,8 +33,9 @@ $Eject
 
 
 
-$Eject
 
+
+$Eject
 
 ;		********************
 ;		*  Public Symbols  *
@@ -49,10 +52,6 @@ AsciiCarriage	Equ	0DH		;Carriage return code
 AsciiLineFeed	Equ	0AH		;Line feed code
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-$Nolist
 $Eject
 	
 ;		*******************
@@ -77,6 +76,7 @@ $Eject
 ;		******************
 ;		*  Code Segment  *
 ;		******************
+
 
 Bios		Segment Common
 		Extrn FloppyParamsPointer:DWord, ClearScreen:Near

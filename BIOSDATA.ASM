@@ -32,6 +32,9 @@ $Eject
 
 
 
+
+
+
 $Eject
 												
 ;		********************
@@ -50,7 +53,6 @@ $Eject
 		Public FixedDisk1, FixedDisk2, PrintTimeOut, RS232TimeOut
 		Public BufferStart, BufferEnd, PrintScnStatus
 $Eject
-
 ;		***********************
 ;		*  Bios Data Segment  *
 ;		***********************
@@ -61,11 +63,13 @@ RS2321Addr	Dw	1 Dup(?)		;Active RS232 Card f
 RS2322Addr	Dw	1 Dup(?)		;Active RS232 Card 2
 RS2323Addr	Dw	1 Dup(?)		;Active RS232 Card 3
 RS2324Addr	Dw	1 Dup(?)		;Active RSege Card 4
+
 PrinterBase	Label	Word
 Printer1Addr	Dw	1 Dup(?)		;Active Printer Card 1
 Printer2Addr	Dw	1 Dup(?)		;Active Printer Card 2
 Printer3Addr	Dw	1 Dup(?)		;Active Printer Card 3
 Printer4Addr	Dw	1 Dup(?)		;Active Printer Card 4
+
 EquipFlag	Dw	1 Dup(?)		;Configuration status
 Mfgtest		Db	1 Dup(?)		;Not used
 MemorySize	Dw	1 Dup(?)		;Memory size in K bytes
@@ -76,18 +80,18 @@ KeyboardFlag2	Db	1 Dup(?)		;...Status
 AltInput	Db	1 Dup(?)		;Keypad data
 KeyBufHead	Dw	1 Dup(?)		;Pointer to head of keyboard buffer
 KeyBufTail	Dw	1 Dup(?)		;Pointer to tail of keyboard buffer
-KeyBuffer	Db	31 Dup (?)		;Keyboard buffer area
+KeyBuffer	Db	31 Dup (?)	;Keyboard buffer area
 KeyBufEnd	Db	1 Dup(?)		;...and last byte of it
 SeekStatus	Db	1 Dup(?)		;Drives 0-3 recalibrate status
 MotorStatus	Db	1 Dup(?)		;Drives 0-3 sotor state
 MotorCount	Db	1 Dup(?)		;Drive turn off counter
 DisketteStat	Db	1 Dup(?)		;Returned status byte
-FDCStatus	Db	7 Dup (?)		;765 status bytes storage
+FDCStatus	Db	7 Dup (?)	;765 status bytes storage
 CrtMode	 	Db	1 Dup(?)		;Current mode
 CrtColumns	Dw	1 Dup(?)		;Number of columns
 CrtLength	Dw	1 Dup(?)		;Linear length of screen
 CrtStart	Dw	1 Dup(?)		;Screen starting address
-CursorPosn	Dw	8 Dup (?)		;Cursor position on each page
+CursorPosn	Dw	8 Dup (?)	;Cursor position on each page
 CursorMode	Dw	1 Dup(?)		;Cursor mode
 ActivePage	Db	1 Dup(?)		;Which page active
 ActiveCard	Dw	1 Dup(?)		;I/O address of active video
@@ -103,6 +107,7 @@ BiosBreak	Db	1 Dup(?)		;If D7=1, break key hit
 ResetFlag	Dw	1 Dup(?)		;Set to 1234 after initialization
 FixedDisk1	Dw	1 Dup(?)		;Used by hard disk
 FixedDisk2	Dw	1 Dup(?)		;Used by hard disk
+
 PrintTimeOut	Label	Word
 PrintTO1	Db	1 Dup(?)		;Printer 1 time out value
 PrintTO2	Db	1 Dup(?)		;Printer 2 time out value
@@ -123,5 +128,4 @@ BufferEnd	DW	1 Dup(?)		;Temporary keyboard driver data area
 PrintScnStatus	Db	1 Dup(?)		;Print screen driver status byte
 
 BiosDataArea	Ends
-
 End

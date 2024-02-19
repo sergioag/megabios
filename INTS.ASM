@@ -1,11 +1,12 @@
 $Title ('DTC/PC BIOS Interrupts V1.0')
 $Pagelength (80) Pagewidth (132) Debug Nogen
-Name Ints
+Name  Ints
 
 
 ;	Author:	Don K. Harrison
 
 ;	Start date:	October 25, 1983	Last edit:	December 26, 1983
+
 
 
 ;		************************
@@ -31,8 +32,9 @@ $Eject
 
 
 
-$Eject
 
+
+$Eject
 
 ;		********************
 ;		*  Public Symbols  *
@@ -50,14 +52,7 @@ $Eject
 		;	All Equates in include file: IbmInc
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-;$Nolist
 $Eject
-
-
-
 ;		*********************************
 ;		*  Ram Based Interrupt Vectors  *
 ;		*********************************
@@ -74,9 +69,7 @@ PrintScreenTrapAddr	Dd	1 Dup (?)	;Print screen vector
 Undef1TrapAddr		Dd	1 Dup (?)	;Undefined vector #1
 Undef2TrapAddr		Dd	1 Dup (?)	;Undefined vector #2
 
-
 			;	Hardware interrupts
-
 TimerHdwrTrapAddr	Dd	1 Dup (?)	;Timer interrupt
 KeyboardHdwrTrapAddr	Dd	1 Dup (?)	;Keyboard interrupt
 IRQ2HdwrTrapAddr	Dd	1 Dup (?)	;Interrupt 2 interrupt
@@ -86,10 +79,7 @@ HarDiskHdwrTrapAddr	Dd	1 Dup (?)	;Hard disk interrupt
 FloppyHdwrTrapAddr	Dd	1 Dup (?)	;Floppy disk interrupt
 PrinterHdwrTrapAddr	Dd	1 Dup (?)	;Printer interrupt
 
-
-
 			;	Driver entry points
-
 VideoTrapAddr		Dd	1 Dup (?)	;Video trap vector
 EquipTrapAddr		Dd	1 Dup (?)	;Equipsent query vector
 MemorySizeTrapAddr	Dd	1 Dup (?)	;Memory size query vector
@@ -105,7 +95,6 @@ KeyBreakTrapAddr	Dd	1 Dup (?)	;Keyboard break address
 TickTrapAddr		Dd	1 Dup (?)	;Timer break address
 
 			;	Data Pointers
-
 VidParamsTrapAddr	Dd	1 Dup (?)	;Video parameters
 FloppyParamsTrapAddr	Dd	1 Dup (?)	;Disk parameters
 VideoGraphicsTrapAddr	Dd	1 Dup (?)	;Video graphics characters

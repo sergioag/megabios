@@ -17,6 +17,8 @@ Name RS232
 
 
 
+
+
 ;		(c) Display Telecommunications Corporation, 1983
 ;			All Rights Reserved
 
@@ -31,8 +33,9 @@ $Eject
 
 
 
-$Eject
 
+
+$Eject
 
 ;		********************
 ;		*  Public Symbols  *
@@ -47,10 +50,6 @@ $Eject
 		;	All Equates in include file: IbmInc
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-;$Nolist
 $Eject
 ;		*******************
 ;		*  Data Segments  *

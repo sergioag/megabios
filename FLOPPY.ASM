@@ -4,6 +4,7 @@ Name Floppy
 
 
 ;    Author:       Don K. Harrison
+
 ;    Start date:   November 17, 1983        Last edit:   December 22, 1983
 
 
@@ -27,6 +28,7 @@ $Eject
 ;		**********************
 ;		*  Revision History  *
 ;		**********************
+
 
 
 
@@ -113,12 +115,7 @@ FDCSenseIntCMD  Equ     00001000B             ;Sense interrupt command
 FDCSeekCMD      Equ     00001111B             ;Seek command
 
 $Include (IbmInc)
-;               *************************
-;               *  Global Include File  *
-;               *************************
-;$Nolist
 $Eject
-
 
 ;               *******************
 ;               *  Data Segments  *
@@ -136,8 +133,6 @@ BiosDataArea    Segment Public
 		Extrn MotorStatus:Byte, MotorCount:Byte
 BiosDataArea    Ends
 $Eject
-
-
 ;               **************************************
 ;               *  Stack Frame After Initialization  *
 ;               **************************************
@@ -169,8 +164,6 @@ $Eject
 ;        |   Command    |  # of Sectors  |<- BP
 ;         ------------------------------- 
 $Eject
-
-
 ;               ******************
 ;               *  Code Segment  *
 ;               ******************
@@ -178,6 +171,7 @@ $Eject
 Bios            Segment Common
 		Assume  Cs:Bios, Ds:BiosDataArea, Ss:BiosStack
 		Org     0EC59H                  ;Align with PC / XT
+
 		;       Initialization of stack frame
 FloppyDriver    Proc    Far
 		Sti                             ;Restore higher interrupts
@@ -245,8 +239,6 @@ FloppyDriver    Proc    Far
 		Ret     2                       ;Return without restoring flags
 FloppyDriver    Endp
 $Eject
-
-
 ;               ***********************************
 ;               *  Command Parser and Dispatcher  *
 ;               ***********************************
@@ -280,8 +272,6 @@ StatusCommand   Endp
 
 
 $Eject
-
-
 ;               **********************************************************
 ;               *                  Reset Command Handler                 *
 ;               *  Returns are via ResetReturn or error conditions in    *
@@ -336,8 +326,6 @@ ResetReturn:
 		Ret                             ;Return, FDC will not respond
 ResetCommand    Endp
 $Eject
-
-
 ;               ***********************************************************
 ;               *  Diskette I/O Commands (Read / Write / Verify / Format  *
 ;               *  Returns are via ErrorReturn, ErrorRtnNum, OperationOk  *
@@ -384,11 +372,9 @@ OurError        Db      SectNotFndStat          ;Sector not found
 		Db      BadFDCStat              ;None of the above (??)
 
 TableStruc      Ends
-
 $Nolist
 
 Table		TableStruc <>
-
 $List
 
 DiskIO          Proc    Near
@@ -401,7 +387,7 @@ DiskIO          Proc    Near
 		Mov     Al,Table.DMAMode[Di]    ;Get DMA mde byte
 		Out     PortDmaMode,Al          ;...and output it to DMA
 
-		;          Translate SEG:0FF to physical address
+		;	Translate SEG:0FF to physical address
 
 		Mov     Ax,PointerSegment       ;Get segment part of pointer
 		Mov     Cl,4                    ;Multiply by 16 (bytes
@@ -413,7 +399,7 @@ DiskIO          Proc    Near
 		Adc     Ch,0                    ;...and carry into Ch
 		Mov     Dx,Ax                   ;Save lower 16 bits of address
 
-		;          Send address to DMAC
+		;	Send address to DMAC
 
 		Out     PortDMACh2Base,Al       ;...and output it
 		Mov     Al,Ah                   ;...to DMA
@@ -421,7 +407,7 @@ DiskIO          Proc    Near
 		Mov     Al,Ch                   ;Now output top
 		Out     PortPageChan2,Al        ;...address to page registers
 
-		;       Calculate Word Count
+		;	Calculate Word Count
 
 		Mov     Ah,NumberOfSectors      ;Form # of sectors
 		Xor     Al,Al                   ;...times 128
@@ -430,19 +416,19 @@ DiskIO          Proc    Near
 		Shl     Ax,Cl                   ;...number of bytes in sector
 		Dec     Ax                      ;Correct for dma requirement
 
-		;       Output it to DMAC
+		;	Output it to DMAC
 
 		Out     PortDMACh2Count,Al      ;...and output
 		Xchg    Al,Ah                   ;...to the
 		Out     PortDMACh2Count,Al      ;...DMA controller
 
-		;       Test for word count error
+		;	Test for word count error
 
 		Xchg    Al,Ah                   ;Restore count in Ax
 		Add     Ax,Dx                   ;Set carry if crossing 64k
 		Jnc     NoCrossing              ;...and Jump if so
 
-		;       Crossed 64k,Error return
+		;	Crossed 64k,Error return
 
 		Sti                             ;Interrupts Ok now
 		Mov     DisketteStat,DMAPageStat;...else loadup error code
@@ -452,22 +438,22 @@ NoCrossing:
 		Mov     Al,00000010B            ;Get mask bit for DMAC
 		Out     PortDMAMaskSngl,Al      ;...and enable the transfer
 										     
-		;       Turn on drive motor and select drive                             
+		;	Turn on drive motor and select drive                             
 
 		Mov     MotorCount,255          ;Set large value during I/O
 
-		;       Calculate Drive Bit from Drive Number
+		;	Calculate Drive Bit from Drive Number
 
 		Mov     Bl,DriveNumber          ;Get drive number in
 		Xor     Bh,Bh                   ;...BX
 		Mov     Al,Table.Bit[Bx]        ;...and calculate bit number
 		Mov     Ch,Al                   ;...Save in ch for seek
 
-		;       Indicate on for compatibility
+		;	Indicate on for compatibility
 
 		Or      MotorStatus,Al          ;indicate in status byte
 
-		;       Actually turn it on and select drive
+		;	Actually turn it on and select drive
 
 		Mov     Cl,4                    ;Move motor bit to
 		Shl     Al,Cl                   ;...upper nibble
@@ -476,18 +462,18 @@ NoCrossing:
 		Mov     Dx,PortFDCAdptMode      ;...point at adapter 1/0 port
 		Out     Dx,Al                   ;...and output the data
 
-		;       Restore interrupts from DMA section above
+		;	Restore interrupts from DMA section above
 
 		Sti                             ;Restore interrupts from above
 
-		;       If write, wait for motor up to speed
+		;	If write, wait for motor up to speed
 
 		Mov     Al,Table.Write[Di]      ;Test if command involves write
 		Or      MotorStatus,Al          ;...(for compatibility)
 		Or      Al,Al                   ;...and affect flags
 		Jns     WaitDone                ;...jump if read (upper bit=0)
 
-		;       Write command,wait for motor up to speed
+		;	Write command,wait for motor up to speed
 
 		Mov     Ah,MotorStart           ;Ah=# of 125ms to wait
 		Or      Ah,Ah                   ;Affect flags
@@ -502,7 +488,7 @@ EighthSecLoop:
 		Pop     Cx                      ;Restore bit position in Ch
 WaitDone:
 
-		;       Seek to track Ch = Motor Bit, Bl = Drive #
+		;	Seek to track Ch = Motor Bit, Bl = Drive #
 
 		Test    SeekStatus,Ch           ;Need recal?
 		Jnz     NoRecalReqd             ;...jump if no
@@ -533,7 +519,7 @@ OneMsLoop:
 		Jnz     MSOuterLoop             ;Loop till done
 MSTimerDone:
 
-		;       Perform the operation
+		;	Perform the operation
 
 		Mov     Al,Table.Command[Di]    ;Get operation command
 		Call    FDCOut                  ;...and send it
@@ -546,7 +532,7 @@ MSTimerDone:
 		Cmp     FDCCommand,DiskCmdFormat ;Are we formatting?
 		Jne     NotFormatting           ;...Jump if not
 
-		;       Load parameters for format
+		;	Load parameters for format
 
 		Mov     Al,SectorSize           ;FDC "N" parameter
 		Call    FDCOut                  ;...Send it out
@@ -558,7 +544,7 @@ MSTimerDone:
 		Call    FDCOut                  ;...send it out
 		Jmp     CommandLoaded           ;Continue below
 
-		;       Load parameters for read / write / verify
+		;	Load parameters for read / write / verify
 
 NotFormatting:
 		Mov     Cx,7                    ;Transfer 7 bytes from
@@ -568,13 +554,14 @@ FrameLoop:
 		Call    FDCOut                  ;...and send it
 		Inc     Di                      ;...inc index to next byte
 		Loop    FrameLoop               ;Loop till 7 bytes moved
-		;       Wait for interrupt
+
+		;	Wait for interrupt
 
 CommandLoaded:
 		Call    WaitForInt              ;Wait for end of op. interrupt
 		Call    GetStatus               ;...Read in the status
 
-		;       Test for error
+		;	Test for error
 
 		Mov     Al,FDCStatus            ;Get first status byte
 		And     Al,11000000B            ;...normal termination?
@@ -669,7 +656,7 @@ FDCInRtn:
 		StC                             ;Indicate error
 		Ret                             ;...and return
 
-		;       Data ready
+		;	Data ready
 
 CorrectDir:
 		Inc     Dx                      ;Point at data port

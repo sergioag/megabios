@@ -1,6 +1,6 @@
 $Title ('DTC/PC BIOS Print Screen Driver V1.0')
 $Pagelength (80) Pagewidth (132) Debug Nogen
-Name Printer
+Name PrintScreen
 
 
 ;	Author:	Don K. Harrison
@@ -23,6 +23,7 @@ Name Printer
 ;			All Rights Reserved
 
 $Eject
+
 
 ;		**********************
 ;		*  Revision History  *
@@ -52,10 +53,6 @@ AsciiCarriageReturn	Equ	0DH		;Ascii carriage return
 
 
 $Include (Ibminc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-;$Nolist
 $Eject
 
 ;		*******************

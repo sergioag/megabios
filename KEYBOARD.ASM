@@ -1,11 +1,11 @@
-$Title ('DTC/PC BIOS Keyboard Interface V1.0')
+$Title ('DTC/PC BIOS Keyboard Interface   V1.0')
 $Pagelength (80) Pagewidth (132) Debug Nogen
 Name Keyboard
 
 
 ;	Author:	Don K. Harrison
 
-;	Start date:	November 3, 1983	Last edit:	December 17, 1983
+;	Start date:  November 3, 1983	Last edit:  December 17, 1983
 
 
 ;		************************
@@ -32,6 +32,8 @@ $Eject
 
 
 
+
+
 $Eject
 
 
@@ -43,7 +45,6 @@ $Eject
 
 
 $Eject
-
 
 ;		*******************
 ;		*  Data Segeents  *

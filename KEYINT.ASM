@@ -17,6 +17,8 @@ Name KeyInt
 
 
 
+
+
 ;		(c) Display Telecommunications Corporation, 1983
 ;			All Rights Reserved
 
@@ -26,6 +28,8 @@ $Eject
 ;		**********************
 ;		*  Revision History  *
 ;		**********************
+
+
 
 
 
@@ -47,10 +51,6 @@ $Eject
 		;	Equates in include file: IbmInc
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-$Nolist
 InsBit		Equ	10000000B		;Flag bits
 CapsBit		Equ	01000000B		;...indicating
 NumBit		Equ	00100000B		;...shift
@@ -82,7 +82,7 @@ $Eject
 
 ;Scan  Lower	Upper		Control		Alt		Table
 ;Code  Case	Case		Case		Case		Entry
-;
+;----  -----	-----		-----		----		-----
 ;01 1BXX ESC	1BXX 1B		1BXX ESC	NO VALUE	37
 ;02 31XX 1	21XX !		NO VALUE	0078 ALT 1	2E
 ;03 32XX 2	40XX @		0003 NUL	0079 ALT 2	20
@@ -154,7 +154,6 @@ $Eject
 ;45 -- NUM LK 	--   NUM LK	-- NUM LK	-- NUM LK    A0 10100000
 ;46 -- SCL LK	--   SCL LK	-- SCL LK	-- SCL LK    98	10010000
 $Eject
-
 ;		***************************
 ;		*  Keyboard Map By Value  *
 ;		***************************
@@ -263,13 +262,12 @@ BiosDataArea	Segment Public
 		Extrn CrtMode:Byte, CrtModeSet:Byte
 BiosDataArea	Ends
 $Eject
-
 ;		******************
 ;		*  Code Segment  *
 ;		******************
 
 Bios		Segment Common
-ByteType	Label	Byte			;Used for xlat instruction typing
+ByteType	Label	Byte		;Used for xlat instruction typing
 
 		Extrn ResetEntry:Far
 
@@ -380,6 +378,7 @@ Org	0E987H - (Size(LevelOneStruc) + Size(LevelTwoStruc) + Size(PadStruc))
 LevelOneTable	LevelOneStruc <>	;
 LevelTwoTable	LevelTwoStruc <>	;
 PadTable	PadStruc <>
+$List
 
 LastTableByte	Equ	$-1		; This byte should be 0E986H
 $Eject

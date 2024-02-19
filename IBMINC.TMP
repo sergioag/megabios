@@ -1,5 +1,5 @@
 ;		*************************
-;		*  Global Include File  *  
+;		*  Global Include File  *
 ;		*************************
 ;$Nolist
 
@@ -11,8 +11,6 @@
 		%*Define (Bus(Value))
 		( Mov 	Al,%Value
 		  Out	0C0H,Al )
-
-
 $Eject
 
 ;		*************
@@ -134,7 +132,6 @@ PortPPIMode	Equ	63H		;Write mode word
 PPIBStdMode	Equ	99H		;Standard mode word = 99H
 
 $Eject
-
 ;		*********************************
 ;		*  Option Adapter Peripherials  *
 ;		*********************************
@@ -348,7 +345,6 @@ MonoStartLow	Equ	13		;Pointer to screen start address low
 CursorHigh	Equ	14		;Pointer to cursor position address hi
 CursorLow	Equ	15		;Pointer to cursor position address low
 $Eject
-
 ;		****************************
 ;		*  Color Graphics Adapter  *
 ;		****************************
@@ -524,5 +520,4 @@ SioCmdInit	Equ	0
 SioCmdSend	Equ	1
 SioCmdReceive	Equ	2
 SioCmdStatus	Equ	3
-
 $List

@@ -55,10 +55,6 @@ AsciiCarriage	Equ	0DH			;...TTY
 AsciiBell	Equ	07H			;...procedure
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File	*
-;		*************************
-;$Nolist
 $Eject
 
 ;		*******************
@@ -68,10 +64,6 @@ $Eject
 IntSegment	Segment Public
 		Extrn	VidParamsTrapAddr:DWord,VideoGraphicsTrapAddr:DWord
 IntSegment	Ends
-
-;               *******************
-;               *  Data Segments  *
-;               *******************
 
 BiosDataArea	Segment Public
 		Extrn CrtMode:Byte, CrtColumns:Word, CrtLength:Word

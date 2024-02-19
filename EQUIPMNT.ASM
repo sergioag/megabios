@@ -53,12 +53,7 @@ $Eject
 		;	All Equates in include file: IbmInc
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-$NoList
 $Eject
-
 
 ;		*******************
 ;		*  Data Segments  *
@@ -69,15 +64,13 @@ BiosDataArea	Segment Public
 BiosDataArea	Ends
 $Eject
 
-
 ;		******************
 ;		*  Code Segment  *
 ;		******************
 
+Bios		Segment Common
 
-Bios	Segment Common
-
-	Assume Cs:Bios, Ds:BiosDataArea
+		Assume Cs:Bios, Ds:BiosDataArea
 
 ;		*****************
 ;		*  Memory Size  *
@@ -95,9 +88,10 @@ MemorySizeDriver	Proc	Far
 		Iret				;...and return
 MemorySizeDriver	Endp
 
-;		************************
-;		* Equipment Inventory  *
-;		************************
+
+;		*************************
+;		*  Equipment Inventory  *
+;		*************************
 
 		Org	0F84DH
 
@@ -111,17 +105,18 @@ EquipDriver	Proc	Far
 		Iret				;...and return
 EquipDriver	Endp
 
-;		**************************
-;		* Dummy Cassette Driver  *
-;		**************************
+;		***************************
+;		*  Dummy Cassette Driver  *
+;		***************************
 
-		Org 0F859H
+		Org	0F859H
+
 CassetteDriver	Proc	Far
 		Stc				;Error return
 		Mov	Ah,86H			;...value
 		Ret	2 			;Toss flags and return
-CassetteDriver Endp
+CassetteDriver	Endp
 
-Bios	Ends
+Bios		Ends
 
 End

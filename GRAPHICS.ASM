@@ -17,10 +17,13 @@ Name Graphics
 
 
 
+
+
 ;		(c) Display Telecommunications Corporation, 1983
 ;			All Rights Reserved
 
 $Eject
+
 
 ;		**********************
 ;		*  Revision History  *
@@ -49,8 +52,6 @@ Bios		Segment Common
 
 		Assume	Cs:Bios
 $Eject
-
-
                	Org    	0FA6EH
 
 VideoGraphicsPointer	Label Byte

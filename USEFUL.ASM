@@ -6,8 +6,7 @@ Name Useful
 ;    Author:	Don K. Harrison
 
 ;    Start date:	December 14,1983	Last edit:	December 27,1983
-
-
+;
 ;		************************
 ;		*  Module Description  *
 ;		************************
@@ -43,8 +42,9 @@ $Eject
 
 
 
-$Eject
 
+
+$Eject
 
 ;		********************
 ;		*  Public Symbols  *
@@ -63,10 +63,6 @@ AsciiCarriage	Equ	0DH			;Carriage return
 AsciiLineFeed	Equ	0AH			;Line feed
 
 $Include (IbmInc)
-;		*************************
-;		*  Global Include File  *
-;		*************************
-;$Nolist
 $Eject
 
 ;		*******************
