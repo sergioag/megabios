@@ -112,7 +112,6 @@ FDCSpecifyCMD   Equ     00000011B             ;Specify command (timers)
 FDCSenseIntCMD  Equ     00001000B             ;Sense interrupt command
 FDCSeekCMD      Equ     00001111B             ;Seek command
 
-;$Include (IbmInc.Asm)
 $Include (IbmInc)
 ;               *************************
 ;               *  Global Include File  *
