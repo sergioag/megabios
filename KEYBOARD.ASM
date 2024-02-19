@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Keyboard Interface V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Keyboard
 
 
@@ -53,7 +49,7 @@ $Eject
 ;		*  Data Segeents  *
 ;		*******************
 
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn KeyboardFlag1:Byte
 		Extrn KeyBufHead:Word, KeyBufTail:Word
 		Extrn BufferStart:Word, BufferEnd:Word

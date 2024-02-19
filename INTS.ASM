@@ -1,5 +1,5 @@
 $Title ('DTC/PC BIOS Interrupts V1.0')
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Ints
 
 
@@ -62,8 +62,7 @@ $Eject
 ;		*  Ram Based Interrupt Vectors  *
 ;		*********************************
 
-;IntSegment	Segment Public
-IntSegment	Segment At 0
+IntSegment	Segment Public
 
 RamVectors		Label	DWord
 ZeroDivisionTrapAddr	Dd	1 Dup (?)	;Divide by zero vector
@@ -105,40 +104,29 @@ TODTrapAddr		Dd	1 Dup (?)	;Time of day vector
 KeyBreakTrapAddr	Dd	1 Dup (?)	;Keyboard break address
 TickTrapAddr		Dd	1 Dup (?)	;Timer break address
 
-
 			;	Data Pointers
 
 VidParamsTrapAddr	Dd	1 Dup (?)	;Video parameters
 FloppyParamsTrapAddr	Dd	1 Dup (?)	;Disk parameters
 VideoGraphicsTrapAddr	Dd	1 Dup (?)	;Video graphics characters
 
-
 IntSegment	Ends
 
 $Eject
-
 ;		**********************
 ;		*  Public Variables  *
 ;		**********************
 
-;BiosDataArea	Segment Public
-BiosDataArea	Segment At 40h
+BiosDataArea	Segment Public
 		Extrn MemorySize:Word, IntrFlag:Byte
 BiosDataArea	Ends
-
-		;Public	_ResetEntry
-_Bios		Segment At 0F000H
-		Org	0E05BH
-_POREntry	Label Far
-		Org	0E066H
-_ResetEntry	Label Far
-_Bios		Ends
 
 ;		***********************
 ;		*  ROM Based Segment  *
 ;		***********************
 
 Bios		Segment Common
+
 		Extrn	WordOut:Near, CharOut:Near, NibbleOut:Near, KeyIn:Near
 		Extrn	PrintMessage:Near, Beep:Near, TimerHdwrInt:Far
 		Extrn	KeyboardHdwrInt:Far, FloppyHdwrInt :Far
@@ -248,7 +236,7 @@ NoErrorFound:
 		Je	NMIReturn		;...jump and return if yes
 		Cmp	Al,'y'			;...y?
 		Je	NMIReturn		;...jump and return if yes
-		Jmp	_POREntry		;Re-boot from cold start
+		Jmp	POREntry		;Re-boot from cold start
 NMIReturn:
 		Call	ClearScreen		;Clear the screen
 		Pop	Ax			;Restore mask

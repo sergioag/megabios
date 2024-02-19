@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Bootstrap Loader V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Boot
 
 
@@ -65,8 +61,7 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-;IntSegment	Segment Public
-IntSegment	Segment At 0
+IntSegment	Segment Public
 		Extrn FloppyParamsTrapAddr:DWord, BasicTrapAddr:DWord
 
 IntSegment	Ends
@@ -74,8 +69,7 @@ IntSegment	Ends
 BootSegment	Segment at 0
 BootSegment	Ends
 
-;BasicSeg	Segment Common
-BasicSeg	Segment At 0F600H
+BasicSeg	Segment Common
 		Assume Cs:BasicSeg
 		Org	0
 Basic	 	Label Far

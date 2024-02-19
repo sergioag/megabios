@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Video Driver V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Video
 
 
@@ -69,7 +65,7 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-IntSegment	Segment At 0
+IntSegment	Segment Public
 		Extrn	VidParamsTrapAddr:DWord,VideoGraphicsTrapAddr:DWord
 IntSegment	Ends
 
@@ -77,17 +73,17 @@ IntSegment	Ends
 ;               *  Data Segments  *
 ;               *******************
 
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn CrtMode:Byte, CrtColumns:Word, CrtLength:Word
 		Extrn CrtStart:Word, CursorPosn:Word, CursorMode:Word
 		Extrn ActivePage:Byte, ActiveCard:Word, CrtModeSet:Byte
 		Extrn CrtPalette:Byte, EquipFlag:Word
 BiosDataArea	Ends
 
-MonoSeg		Segment At 0B000H
+MonoSeg		Segment Public
 MonoSeg		Ends
 
-ColorSeg	Segment At 0B800H
+ColorSeg	Segment Public
 ColorSeg	Ends
 
 $Eject
@@ -462,7 +458,6 @@ ReadLpPos	Proc	Near			;Read Light pen position
 		Jnz	LpPosJmp1		;...jump over return if trigger
 ) Else (
 		Jz	LpPosJmp1		;...jump over return if trigger (BUGFIX)
-)
 ) fI
 		Ret				;...return not triggered
 LpPosJmp1:

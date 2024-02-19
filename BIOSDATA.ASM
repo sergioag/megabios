@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Public Data Definitions V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (82) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name  Publics
 
 
@@ -59,8 +55,7 @@ $Eject
 ;		*  Bios Data Segment  *
 ;		***********************
 
-;BiosDataArea	Segment Public
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 RS232Base	Label Word
 RS2321Addr	Dw	1 Dup(?)		;Active RS232 Card f
 RS2322Addr	Dw	1 Dup(?)		;Active RS232 Card 2

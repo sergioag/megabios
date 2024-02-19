@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Keyboard Interrupt Service Routine V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name KeyInt
 
 
@@ -83,8 +79,6 @@ $Eject
 ;		******************
 ;		*  Keyboard Map  *
 ;		******************
-
-; TODO: fix this
 
 ;Scan  Lower	Upper		Control		Alt		Table
 ;Code  Case	Case		Case		Case		Entry
@@ -261,12 +255,7 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-_Bios		Segment At 0F000H
-		Org	0E066H
-_ResetEntry	Label Far
-_Bios		Ends
-
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn KeyboardFlag1:Byte, KeyboardFlag2:Byte
 		Extrn AltInput:Byte, KeybufHead:Word, KeyBufTail:Word
 		Extrn KeyBuffer:Byte, ResetFlag:Word, BufferStart:Word
@@ -702,7 +691,7 @@ PadALTState:
 		Cmp	Ah,DelKey		;Are we processing DEL?
 		Jne	KeyPadCont2		;...jump if not
 		Mov	ResetFlag,1234H		;...else, set reset flag
-		Jmp	_ResetEntry		;...and reset the system
+		Jmp	ResetEntry		;...and reset the system
 KeyPadCont2:
 		Mov	Bx,Offset PadTable.Shift  ;Point at numeric translation
 		Xlat	Cs:ByteType		;Translate from table

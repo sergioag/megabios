@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Graphic Character Generator  V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Graphics
 
 

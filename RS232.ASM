@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS RS232 Driver V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name RS232
 
 
@@ -60,13 +56,11 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-;IntSegment	Segment Public
-IntSegment	Segment At 0
+IntSegment	Segment Public
 
 IntSegment	Ends
 
-;BiosDataArea	Segment Public
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn RS232Base:Word, RS232TimeOut:Byte
 BiosDataArea	Ends
 $Eject

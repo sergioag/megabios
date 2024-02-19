@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Stack V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Stack
 
 
@@ -49,8 +45,7 @@ $Eject
 ;		*  Stack Segeent  *
 ;		*******************
 
-;BiosStack	Segment	Public
-BiosStack	Segment At 30H
+BiosStack	Segment	Public
 			Dw 		128 Dup (?)				;128 Level Temporary Stack
 StackTop	Label	Word
 BiosStack	Ends

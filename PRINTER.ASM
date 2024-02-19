@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Parallel Printer Driver V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Printer
 
 
@@ -64,8 +60,7 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-;BiosDataArea	Segment Public
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn PrintTimeOut:Byte, PrinterBase:Word
 BiosDataArea	Ends
 $Eject

@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Time of Day and Real Ti11e Clock V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Equipmnt
 
 
@@ -65,7 +61,7 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-BiosDataArea	Segment At 40H 
+BiosDataArea	Segment Public
 		Extrn Timerlow:Word, TimerHigh:Word,TimerOverflow:Byte
 		Extrn MotorStatus:Byte, MotorCount:Byte
 BiosDataArea	Ends

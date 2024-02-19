@@ -1,8 +1,5 @@
 $Title ('DTC/PC BIOS Initialization Module  V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-;$Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Video
 
 
@@ -72,8 +69,7 @@ $Eject
 ;		*  Data Segments  *
 ;		*******************
 
-;BiosDataArea	Segment Public
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn MemorySize:Word, ResetFlag:Word, EquipFlag:Word
 		Extrn KeyBuffer:Byte, KeyBufHead:Word, KeyBufTail:Word
 		Extrn BufferStart:Word, BufferEnd:Word
@@ -86,43 +82,36 @@ BiosDataArea	Segment At 40H
 
 BiosDataArea	Ends
 
-;BiosStack	Segment Public
-BiosStack	Segment At 30H
+BiosStack	Segment Public
 		Extrn StackTop:Word
 BiosStack	Ends
 
-HiStack		Segment At 80H
+HiStack	Segment
 HiStack 	Ends
 
-;IntSegment	Segment Public
-IntSegment	Segment At 0H
+IntSegment	Segment Public
 		Extrn RAMVectors:DWord, ROMVectors:DWord, VideoTrapAddr: DWord
 		Extrn BasicTrapAddr:DWord, NMITrapAddr:DWord
 		Extrn VideoGraphicsTrapAddr:DWord, PrintScreenTrapAddr:DWord
 IntSegment	Ends
 
-;BasicSeg	Segment Common
-BasicSeg	Segment At 0F600H
+BasicSeg	Segment Common
 		Assume Cs:BasicSeg
 		Org	0
 Basic		Label Far
 BasicSeg	Ends
 
-;IOROMSeg	Segment Common
-IOROMSeg	Segment At 0C000H
+IOROMSeg	Segment Common
 IOROMSeg	Ends
 
-;FlasherSegment	Segment
-FlasherSegment	Segment At 0H
+FlasherSegment	Segment
 DsZero		Label 	Byte
 FlasherSegment	Ends
 
-;MonoSeg		Segment Public
-MonoSeg		Segment At 0B000H
+MonoSeg		Segment Public
 MonoSeg		Ends
 
-;ColorSeg	Segment Public
-ColorSeg	Segment At 0B800H
+ColorSeg	Segment Public
 ColorSeg	Ends
 
 
@@ -133,28 +122,20 @@ $Eject
 ;		******************************
 
 ReleaseDate	Segment byte
+
 ;		***********************
 ;		*  Release Date Code  *
 ;		***********************
-		Org	0FFF5H
+
 		Db	'12/23/83DKH'
 
 ReleaseDate	Ends
 $Eject
-
-		;Public	_ResetEntry
-_Bios		Segment At 0F000H
-		Org	0E05BH
-_POREntry	Label Far
-		Org	0E066H
-_ResetEntry	Label Far
-_Bios		Ends
-
 ;		******************
 ;		*  Code Segment  *
 ;		******************
 ;		************************************
-;		* Initialization Code Entry Point  *
+;		*  Initialization Code Entry Point  *
 ;		************************************
 
 Bios		Segment Common
@@ -162,24 +143,9 @@ Bios		Segment Common
 		Extrn PrintScreenInt:Near, NMIInt:Near, IllegalInt:Near
 		Extrn WordOut:Near, ByteOut:Near, KeyIn:Near
 		Extrn PrintMessage:Near, Beep:Near, CharOut:Near
-		Extrn MemoryTest :Near, RomCheckCx:Near
+		Extrn MemoryTest:Near, RomCheckCx:Near
 		Extrn ROMCheck8K:Near, VideoInit:Near
 		Extrn CrtCrlf:Near
-
-
-;		***********************
-;		*  Release Date Code  *
-;		***********************
-		Org	0FFF5H
-		Db	'12/23/83'
-		Db	'DKH'			;author initials
-
-
-;		************************
-;		*  CPU Power On Vector *
-;		************************
-		Org	0FFF0H
-		Jmp	_POREntry		
 
 		Org	0E000H			;Begin BIOS
 StartOfBios	Label	Byte
@@ -194,7 +160,7 @@ Logon2ndHalf	Db	'Corporation, 1983'
 ;		*  List of Printers  *
 ;		**********************
 
-		Assume 	Cs:Bios			;Tell ASM86 what we think
+		Assume Cs:Bios			;Tell ASM86 what we think
 PossiblePtrs:
 		Dw	3BCH			;Printer on mono card
 		Dw	378H			;Parallel printer card (pri.)
@@ -756,7 +722,7 @@ BeepPause:
 		Je	BootItup		;...jump and continue if yes
 		Cmp	Al,'y'			;...y?
 		Je	BootItUp		;...jump and continue if yes
-		Jmp	_ResetEntry		;Re-boot
+		Jmp	ResetEntry		;Re-boot
 
 
 BootItUp:

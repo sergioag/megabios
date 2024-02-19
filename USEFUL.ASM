@@ -1,9 +1,5 @@
 $Title ('DTC/PC BIOS Useful Procedures V1.0')
-$Pagelength (80)
-$Pagewidth (132)
-$Debug
-$Nogen
-;$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen
 Name Useful
 
 
@@ -78,8 +74,7 @@ $Eject
 ;		*******************
 
 
-;BiosDataArea	Segment Public
-BiosDataArea	Segment At 40H
+BiosDataArea	Segment Public
 		Extrn EquipFlag:Word
 BiosDataArea	Ends
 
