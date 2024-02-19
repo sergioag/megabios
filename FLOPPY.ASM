@@ -259,7 +259,7 @@ ParseAndGo      Proc    Near
 		Dec     Al                      ;...command = status?
 		Jz      StatusCommand           ;...jump if Ah=1
 		Cmp     DriveNumber,3           ;Drive # must be 0 1 2 or 3
-		Jz      BadDriveRtn             ;...jump if out of range
+		Ja      BadDriveRtn             ;...jump if out of range
 		Cmp     Al,DiskCmdFormat        ;Command =< Format (highest)
 		Jbe     DiskIOShort             ;...jump if 2 thru 5
 BadDriveRtn:
@@ -527,7 +527,7 @@ NoRecalReqd:
 		Or      Al,Al                   ;...none (??), comply
 		Jz      MSTimerDone             ;...and end timer
 MSOuterLoop:
-		Mov     Cx,558                  ;1 ms timer
+		Mov     Cx,550                  ;1 ms timer
 OneMsLoop:
 		Loop    OneMsLoop               ;Loop for a ms
 		Dec     Al                      ;Decrement outer loop

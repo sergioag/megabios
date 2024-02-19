@@ -151,7 +151,7 @@ MotorsStillRun:
 NoCarryToHi:
 		Cmp	TimerHigh,18H		;Does the timer = 24 hrs 
 		Jne	NoCarryToOflo		;...Jump if not 
-		Cmp	TimerLow,080H		;Does the timer = 24 hrs 
+		Cmp	TimerLow,0B0H		;Does the timer = 24 hrs
 		Jne	NoCarryToOflo		;...Jump if not 
 
 		;	Set overflow 

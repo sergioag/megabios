@@ -325,11 +325,8 @@ SetModeJump1:
 
 		Xor	Bh,Bh			;Form index into table (Bl=mode)
 		Push	Bx			;Save Bx=crt mode
-%If (%BugFix Eq 0) Then (
-		Mov	Bl,OffsetTable[Bx]	;Load the offset
-) Else (
-		Mov	Bl,Byte Ptr Cs:OffsetTable[Bx]	;Load the offset
-) fI
+;		;Mov	Bl,OffsetTable[Bx]	;Load the offset
+		Mov	Bl,Byte Ptr OffsetTable[Bx]	;Load the offset (BUGFIX)
 		Add	Si,Bx			;...and point at right list
 		Mov	Cx,16			;Do 16 bytes
 
@@ -458,11 +455,8 @@ ReadLpPos	Proc	Near			;Read Light pen position
 		Test	Al,00000100B		;...and test bit
 		Jz	ResetTrigRtn		;If not set, return and reset
 		Test	Al,00000010B		;If not trigger, return no reset
-%If (%BugFix Eq 0) Then (
 		Jnz	LpPosJmp1		;...jump over return if trigger
-) Else (
-		Jz	LpPosJmp1		;...jump over return if trigger (BUGFIX)
-) fI
+;		Jz	LpPosJmp1		;...jump over return if trigger (BUGFIX)
 		Ret				;...return not triggered
 LpPosJmp1:
 		Mov	Ah,16			;Fetch value from 6845
@@ -867,11 +861,8 @@ HWaitRead:
 HWaitRead2:
 		In	Al,Dx			;Get status
 		Test	Al,1			;...gone back hi?
-%If (%BugFix Eq 0) Then (
 		Jz	HWaitRead		;...wait till it does
-) Else (
-		Jz	HWaitRead2		;...wait till it does (BUGFIX)
-) fI
+;		Jz	HWaitRead2		;...wait till it does (BUGFIX)
 		Lodsw				;...read it quick
 		Pop	Ds			;Restore Ds
 		Assume 	Ds:BiosDataArea		;...and tell ASMBS
