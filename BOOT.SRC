@@ -8,7 +8,6 @@ Name Boot
 ;    Start date:  October 25, 1983      Last edit:  December 27, 1983
 
 
-
 ;               ************************
 ;               *  Module Description  *
 ;               ************************
@@ -145,7 +144,7 @@ WhatGives:
 TryBasic:
                 Xor     Ax,Ax                   ;Point at interrupt segment
                 Mov     Ds,Ax                   ;...to check
-                Les     Ax,BasicTrapAddr        ;...if basic is available
+                Les     Ax,BasicTrapAddr        ;...if basic available
                 Mov     Bx,Es                   ;...for booting
                 Cmp     Ax,Offset Basic         ;Check offset
                 Mov     Ax,0                    ;Clear flag incase failure

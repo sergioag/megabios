@@ -63,7 +63,7 @@ HoldBit         Equ     00001000B               ;Hold state
 BreakBit        Equ     10000000B               ;Upper bit of scan
 BiosBit         Equ     10000000B               ;Break Key Flag
 
-                ;       Scan Code Definitions Used by Routine
+                ;       Scan Code Definitions Used By Routine
 
 TwoKey          Equ     03H                     ;Scan code for 2 key
 PrtScnKey       Equ     37H                     ;Scan code for print screen key
@@ -123,8 +123,8 @@ $Eject
 ;25 6BXX k      4BXX K          0BXX VT         0022 ALT k      0B
 ;26 6CXX l      4CXX L          0CXX FF         0026 ALT l      0C
 ;27 3BXX ;      3AXX :          NO VALUE        NO VALUE        3F
-;28 27XX /      22XX "          NO VALUE        NO VALUE        40
-;29 60XX '      7EXX ~          NO VALUE        NO VALUE        41
+;28 27XX '      22XX "          NO VALUE        NO VALUE        40
+;29 60XX `      7EXX ~          NO VALUE        NO VALUE        41
 ;2A --  SHIFT   --   SHIFT      --  SHIFT       --  SHIFT  82 10000010
 ;2B 5CXX \      7CXX |          1CXX FS         NO VALUE        3C
 ;2C 7AXX z      58XX Z          1AXX SUB        002C ALT z      1A
@@ -371,7 +371,7 @@ PadStruc        Ends
 ;       Align next to Keyboard Driver
 Org     0E987H - (Size(LevelOneStruc) + Size(LevelTwoStruc) + Size(PadStruc))
 
-$NoList
+$Nolist
 LevelOneTable   LevelOneStruc<>         ;MISSING LINE
 LevelTwoTable   LevelTwoStruc<>         ;MISSING LINE
 PadTable        PadStruc<>              ;MISSING LINE
@@ -532,7 +532,7 @@ HoldIntReturn:
 ;               *  What Shift State are We In?  *
 ;               *********************************
 
-                ;       Ah = Scan Code, Al = Value from Level 1 Table
+                ;       Ah = Scan Code, Al = Value From Level 1 Table
 
 KeyContinue4:
                 Test    KeyboardFlag1,AltBit            ;Alt?
@@ -576,7 +576,7 @@ ControlState:
                 Mov     KeyBufTail,Ax           ;...
                 Mov     KeyBufHead,Ax           ;...
                 Int     TrapKeyBreak            ;Trap to keyboard break driver
-                Sub     Ax,Ax                   ;...Incase of return
+                Sub     Ax,Ax                   ;...In case of return
                 Jmp     KeyBufLoad              ;...send some data back
 
                 ;       Set Hold State?
@@ -629,7 +629,7 @@ ShiftState:
                 Jmp     KeyReturnNoEoi          ;...and return
 
 KeyContinue6:
-                Cmp     Al,ControlZ             ;is Level 1 <= Control Z?
+                Cmp     Al,ControlZ             ;Is Level 1 <= Control Z?
                 Ja      ShiftNotAZ              ;...jump if not and continue
                 Add     Al,40H                  ;...else return extended
                 Jmp     KeyBufLoad              ;...Al = L1+40H  Ah = Scan
@@ -691,7 +691,7 @@ PadALTState:
 KeyPadCont2:
                 Mov     Bx,Offset PadTable.Shift  ;Point at numeric translation
                 Xlat    Cs:ByteType             ;Translate from table
-                Cmp     Al,'0'                  ;Test if < 0 <.+-)
+                Cmp     Al,'0'                  ;Test if < 0 (.+-)
                 Jb      PadReturn               ;...and return null if it is
                 Sub     Al,'0'                  ;...else remove ascii offset
                 Mov     Bl,Al                   ;Free up accumulator
@@ -710,7 +710,7 @@ PadControlState:
                 Xlat    Cs:ByteType             ;Translate from scan to data
                 Jmp     KeyBufLoad
 PadBaseState:
-                Cmp     Ah,InsKey or 80H        ;Breaking INS key?
+                Cmp     Ah,InsKey Or 80H        ;Breaking INS key?
                 Jne     NotBrkIns               ;...jump if not
                 And     KeyboardFlag2,Not InsBit        ;Show INS key released
                 Jmp     PadReturn               ;...and return
@@ -743,7 +743,7 @@ $Eject
         ;       Entry one, KeyBufLoad, will perform a final translation
         ;       if the value in Al is between 0 and 4, 80 will be added.
         ;
-        ;       Entry 2, KeyBufLoad2, will not perform this translation.
+        ;       Entry two, KeyBufLoad2, will not perform this translation.
         ;       It is used by the control state processor to return control
         ;       codes which fall in this range.  In either case, if the
         ;       upper bit is set upon entry, the value in Al is moved into

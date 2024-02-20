@@ -154,6 +154,7 @@ $Eject
 ;               ******************
 ;               *  Code Segment  *
 ;               ******************
+
 Bios            Segment Common
                 Extrn   VideoGraphicsPointer:Byte, Beep:Near
                 Assume  Cs:Bios, Ds:BiosDataArea, Es:Nothing
@@ -472,7 +473,7 @@ LpPosJmp2:
                 Mov     Ch,Al                   ;Scan line in Ch
                 Shl     Ch,1                    ;...double for interlace
                 Mov     Dl,Ah                   ;Char column in Dl
-                mov     Dh,Al                   ;Char row in Dh
+                Mov     Dh,Al                   ;Char row in Dh
                 Shr     Dh,1                    ;Get char row value in
                 Shr     Dh,1                    ;...range (div by 4)
 
@@ -639,7 +640,7 @@ MoveLoop:
                 Jnz     MoveLoop                ;...and loop till all moved
                 Mov     Dh,ScrollNumRows                ;Load count of rows to blank
 
-                ;       Clear rows at top or bottom
+                ;       Clear rows at bottom or top
 
 BlankOnly:
                 Xor     Ch,Ch                   ;Clear counter top
@@ -658,7 +659,7 @@ BlankBotLoop:
                 Call    WhichMode               ;Mono card?
                 Jz      ScrollReturn            ;...return if so
                 Mov     Al,CrtModeSet           ;Get current mode
-                Mov     Dx,PortColorMode        ;...and restore it
+                Mov     Dx,PortColorMode         ;...and restore it
                 Out     Dx,Al                   ;...to re-enable video
 ScrollReturn:
                 Ret                             ;and return
@@ -695,7 +696,7 @@ GraphDn1:
                 Shl     Dl,1                    ;Twice as many bytes per column
                 Shl     Di,1                    ;...offset correction for LoRes
                 Cmp     Al,7                    ;Down?
-                jne     HiresSkip               ;...jump if not
+                Jne     HiresSkip               ;...jump if not
                 Inc     Di                      ;...bump to last byte
 
                 ;       Adjust # of rows to scroll to even field scan lines
@@ -1011,7 +1012,7 @@ MedResWrLoop:
 DoubleUp:
                 Shr     Al,1                    ;Shift dots Rt into carry bit
                 Rcr     Bx,1                    ;Shift accum Rt from carry
-                Sar     Bx,1                    ;Shift accum Rt and rep. bit 15
+                Sar     Bx,1                    ;Shift accum rt and rep. bit 15
                 Loop    DoubleUp                ;Loop till 8 bits doubled
                 Mov     Ax,Bx                   ;Get shift accum back to Ax
                 Pop     Bx                      ;Restore pushed registers
@@ -1394,7 +1395,7 @@ BSHandler:
 BellHandler:
                 Mov     Bl,2                    ;Call external beep routine
                 Call    Beep                    ;...and
-                Ret                             ;...and return
+                Ret                             ;...return
 
                 ;       Carriage Return
 

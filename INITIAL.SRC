@@ -3,7 +3,7 @@ $Pagelength (80) Pagewidth (132) Debug Nogen
 Name Initial
 
 
-;    Author:      Don K. Harrison
+;    Author:        Don K. Harrison
 
 ;    Start date:  October 18, 1983      Last edit:  December 26, 1983
 
@@ -40,7 +40,7 @@ $Eject
 ;               *  Public Symbols  *
 ;               ********************
 
-                Public ResetEntry,POREntry
+                Public ResetEntry, POREntry
 
 
 ;               *************
@@ -87,7 +87,7 @@ HiStack Ends
 
 IntSegment      Segment Public
                 Extrn RAMVectors:DWord, ROMVectors:DWord, VideoTrapAddr:DWord
-                Extrn BasicTrapAddr:DWord, NMITrapAddr:Dword
+                Extrn BasicTrapAddr:DWord, NMITrapAddr:DWord
                 Extrn VideoGraphicsTrapAddr:DWord, PrintScreenTrapAddr:Dword
 IntSegment      Ends
 
@@ -189,7 +189,7 @@ ResetEntry      Label   Far
 
                 ;       Test 8088 Flags
 
-                Xor     Ax,Ax                   ;Cy,Of,Sf=0 Z,Pf=1
+                Xor     Ax,Ax                   ;Cy,Of,Sf=0, Z,Pf=1
                 Jc      Err8088                 ;...jump if carry set
                 Jo      Err8088                 ;...jump if overflow
                 Js      Err8088                 ;...jump if sign
@@ -234,11 +234,11 @@ Err8088:
                 Hlt                             ;Common error halt
 Ok8088:
 
-                ;       Being the Initialization
+                ;       Begin the Initialization
 
                 Cld                             ;Clear direction flag
                 Mov     Al,NMIMask              ;Mask NMI
-                Out     PortNMIMask,Al          ;...interrupt till ready
+                Out     PortNMIMask,Al          ;...interrupts till ready
 
                 ;       Stabilize Color and Monochrome Adapters
 
@@ -277,11 +277,11 @@ Ok8088:
                 Mov     Al,01011000B            ;Mode DMA
                 Out     PortDMAMode,Al          ;..Channel 0 = Read, auto-init
                 Mov     Al,01000001B            ;Mode DMA
-                Out     PortDMAMode,Al          ;..Channel 1 = Verify
+                Out     PortDMAMode,Al          ;...Channel 1 = Verify
                 Mov     Al,01000010B            ;Mode DMA
-                Out     PortDMAMode,Al          ;..Channel 2 = Verify
+                Out     PortDMAMode,Al          ;...Channel 2 = Verify
                 Mov     Al,01000011B            ;Mode DMA
-                Out     PortDMAMode,Al          ;..Channel 3 = Verify
+                Out     PortDMAMode,Al          ;...Channel 3 = Verify
                 Mov     Al,0FFH                 ;Load max count in
                 Out     PortDMACh0Count,Al      ;...channel 0 for
                 Out     PortDMACh0Count,Al      ;...refresh of memories
@@ -312,7 +312,7 @@ RefOk:
                 Mov     Al,00110110B            ;Mode = 2 byte, Sq. Wave
                 Out     PortCTCMode,Al          ;...binary counting
                 Mov     Al,0                    ;Load counter with 0 for
-                Out     PortCTCLoadCh0,Al       ;...maximum count
+                Out     PortCTCLoadCh0,Al       ;...maximum count and
                 Out     PortCTCLoadCh0,Al       ;...slowest clock available
 
                 ;       Enable expansion box
@@ -530,7 +530,7 @@ KeyResetLoop:
                 Mov     Ax,Offset KeyBuffer     ;Setup keyboard buffer
                 Mov     KeyBufHead,Ax           ;Head pointer
                 Mov     KeyBufTail,Ax           ;Tail pointer
-                MOv     BufferStart,Ax          ;Starting address of buffer
+                Mov     BufferStart,Ax          ;Starting address of buffer
                 Add     Ax,32                   ;Length of buffer = 32
                 Mov     BufferEnd,Ax            ;...store it
                 Jmp     OverNMIEntry            ;Jump over PC NMI entry point
@@ -646,7 +646,7 @@ ExpansionChk:
                 Push    Dx                      ;Save pointer during init
                 Mov     IOROMInit,3             ;Offset into jump vector
                 Mov     IOROMSegment,DS         ;...Segment into jump vector
-                Call    DWord ptr IOROMInit     ;... and call init code
+                Call    DWord ptr IOROMInit     ;...and call init code
                 Pop     Dx                      ;Restore pointer
                 Jmp     ROMDone                 ;...and jump, rom init'ted
 ROMErrJmp:
@@ -727,7 +727,7 @@ BootItUp:
                 Pop     Ax                      ;Restore column count
                 Cmp     Al,80                   ;...is it >= 80?
                 Jae     SkipBootCr              ;Jump if 80 or above
-                Call    CrtCrlf                 ;else do a carriage return
+                Call    CrtCrlf                 ;...else do a carriage return
 SkipBootCr:
                 Mov     Si,Offset LogOn2ndHalf  ;Point at message
                 Call    PrintMessage            ;...and send it
@@ -783,7 +783,7 @@ ColorMon:
 OuterMemLoop:
                 Test    Bp,111B                 ;Flip only if lower three bits
                 Jnz     SkipFlip                ;...of counter are = 0
-                Xor     DsZero,073H             ;...alternate between / and \
+                Xor     DsZero,073H             ;...alternate between \ and /
 SkipFlip:
                 Call    MemoryTest              ;...test memory
                 Jc      LoadMemErr              ;...and jump if bad

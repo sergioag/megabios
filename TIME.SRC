@@ -159,7 +159,7 @@ NoCarryToOflo:
                 ;       Acknowledge interrupt
 
                 Mov     Al,PicEoi               ;End of interrupt
-                Out     PortPicOCW2,Al          ;...to 8259A
+                Out     PortPICOCW2,Al          ;...to 8259A
                 Pop     Ax                      ;Restore
                 Pop     Dx                      ;...registers
                 Pop     Ds                      ;...and

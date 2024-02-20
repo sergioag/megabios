@@ -1,6 +1,6 @@
 $Title ('DTC/PC BIOS Public Data Definitions V1.0')
 $Pagelength (80) Pagewidth (132) Debug Nogen
-Name  Publics
+Name Publics
 
 
 ;    Author:      Don K. Harrison
@@ -46,7 +46,7 @@ $Eject
                 Public AltInput, KeyBufHead, KeyBufTail, KeyBuffer
                 Public KeyBufEnd, SeekStatus, MotorStatus, MotorCount
                 Public DisketteStat, FDCStatus, CrtMode, CrtColumns
-                Public Crtlength, CrtStart, CursorPosn, CursorMode
+                Public CrtLength, CrtStart, CursorPosn, CursorMode
                 Public ActivePage, ActiveCard, CrtModeSet, CrtPalette
                 Public IOROMInit, IOROMSegment, IntrFlag, TimerLow
                 Public TimerHigh, TimerOverflow, BiosBreak, ResetFlag
@@ -81,7 +81,7 @@ AltInput        Db      1 Dup(?)                ;Keypad data
 KeyBufHead      Dw      1 Dup(?)                ;Pointer to head of keyboard buffer
 KeyBufTail      Dw      1 Dup(?)                ;Pointer to tail of keyboard buffer
 KeyBuffer       Db      31 Dup(?)       ;Keyboard buffer area
-KeyBufEnd       Db      1 Dup(?)                ; ... and last byte of it
+KeyBufEnd       Db      1 Dup(?)                ;...and last byte of it
 SeekStatus      Db      1 Dup(?)                ;Drives 0-3 recalibrate status
 MotorStatus     Db      1 Dup(?)                ;Drives 0-3 motor state
 MotorCount      Db      1 Dup(?)                ;Drive turn off counter

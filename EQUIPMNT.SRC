@@ -1,4 +1,4 @@
-$Title ('DTC/PC BIOS Equipment Determination and Memory Size  V1.01')
+$Title ('DTC/PC BIOS Equipment Determination and Memory Size  V1.0')
 $Pagelength (80) Pagewidth (132) Debug Nogen
 Name Equipmnt
 
@@ -39,9 +39,9 @@ $Eject
 
 $Eject
 
-;               *******************
-;               * Public Symbols  *
-;               *******************
+;               ********************
+;               *  Public Symbols  *
+;               ********************
 
                 Public EquipDriver, MemorySizeDriver, CassetteDriver
 

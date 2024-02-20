@@ -4,8 +4,8 @@ Name PrintScreen
 
 
 ;    Author:      Don K. Harrison
-;    Start date:  December 7, 1983      Last edit:  December 20, 1983
 
+;    Start date:  December 7, 1983      Last edit:  December 20, 1983
 
 
 ;               ************************
@@ -153,12 +153,12 @@ PrintScnEnd:
                 Mov     Ah,VidCmdCurPos         ;...cursor
                 Int     TrapVideo               ;...to screen
 InProgressEnd:
-                Pop     Dx                      ;...............
-                Pop     Cx                      ; Restore      .
-                Pop     Bx                      ;  Registers   .
-                Pop     Ax                      ;      and     .
-                Pop     Ds                      ;       Return .
-                Iret                            ;...............
+                Pop     Dx                      ;................
+                Pop     Cx                      ;. Restore      .
+                Pop     Bx                      ;.  Registers   .
+                Pop     Ax                      ;.      and     .
+                Pop     Ds                      ;.       Return .
+                Iret                            ;................
 
 ;               *****************************
 ;               *  Printer Carriage Return  *

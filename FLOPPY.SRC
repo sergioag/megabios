@@ -205,7 +205,7 @@ FloppyDriver    Proc    Far
                 Xchg    Cl,Dh                   ;Re-arrange for
                 Xchg    Dl,Cl                   ;...command block
                 Push    Dx                      ;Save Cl, Dh (Sec# & HD#)
-                Push    Cx                      ;Save Ch,Dl  (TK# & DV#)
+                Push    Cx                      ;Save Ch, Dl  (TK# & DV#)
                 Push    Di                      ;Save Ah, Al (Cmd & #Sectors)
                 Mov     Bp,Sp                   ;Point at base of stack frame
 
@@ -450,7 +450,7 @@ NoCrossing:
 
                 ;       Indicate on for compatibility
 
-                Or      MotorStatus,Al          ;Indicate status in byte
+                Or      MotorStatus,Al          ;Indicate in status byte
 
                 ;       Actually turn it on and select drive
 
@@ -481,7 +481,7 @@ NoCrossing:
 OuterLoop:
                 Xor     Cx,Cx                   ;Max count in Cx
 EighthSecLoop:
-                Loop    EighthSecLoop           ;Loop for 125ms
+                Loop    EighthSecLoop           ;Loop for 125 ms
                 Dec     Ah                      ;Decrement outer loop
                 Jnz     OuterLoop               ;...and jump to the top of it
                 Pop     Cx                      ;Restore bit position in Ch
@@ -581,7 +581,7 @@ ErrorLoop:
                 Inc     Bx                      ;...bump pointer
                 Loop    ErrorLoop               ;...and loop till done
 
-                ;       Failing thru to here means no bits were set (FDC error)
+                ;       Falling thru to here means no bits were set (FDC error)
 
 ErrorFound:
                 Mov     Al,Table.OurError[Bx]   ;Translate from table

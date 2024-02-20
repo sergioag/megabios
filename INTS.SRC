@@ -123,9 +123,9 @@ Bios            Segment Common
                 Extrn PrintMessage:Near, Beep:Near, TimerHdwrInt:Far
                 Extrn KeyboardHdwrInt:Far, FloppyHdwrInt:Far
                 Extrn VideoDriver:Far, EquipDriver:Far
-                Extrn MemorySizeDriver:Far,FloppyDriver:Far,CommsDriver:Far
-                Extrn CassetteDriver:Far,KeyboardDriver:Far,PrinterDriver:Far
-                Extrn BootDriver:Far,TODDriver:Far,VidParamsPointer:Byte
+                Extrn MemorySizeDriver:Far, FloppyDriver:Far, CommsDriver:Far
+                Extrn CassetteDriver:Far, KeyboardDriver:Far, PrinterDriver:Far
+                Extrn BootDriver:Far, TODDriver:Far, VidParamsPointer:Byte
                 Extrn FloppyParamsPointer:Byte, ResetEntry:Far, PorEntry:Far
                 Extrn VideoInit:Near, ClearScreen:Near, PositionCursor:Near
 
@@ -171,7 +171,7 @@ NMIOccurred:
                 Out     PortNMIMask,Al          ;...from causing further err's
                 Mov     Dx,PortPPIPortB         ;Point at port B
                 In      Al,Dx                   ;Get parity controls
-                Or      Al,00110000B            ;Set them hi
+                Or      Al,00110000B            ;Set them Hi
                 Out     Dx,Al                   ;...clearing F/Fs
                 And     Al,11001111B            ;Set them Lo
                 Out     Dx,Al                   ;...enabling them
