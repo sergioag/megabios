@@ -34,7 +34,7 @@ More information about DTC, MEGA-BIOS and it's legacy can be found [here](https:
 1. Make sure ASM86 directory is in your `PATH` environment variable (ex: `PATH=C:\ASM86` or whever it is located).
 2. Run `BUILD.BAT` in a DOS environment, which will produce `MB.HEX` in Intel Hex format.
 3. (Optional) Convert to binary file format using one of the following methods:
-   - objcopy: `objcopy --input-target=ihex --output-target=binary --gap-fill=255 mb.hex mb.bin`\
+   - objcopy: `objcopy --input-target=ihex --output-target=binary --gap-fill=255 mb.hex mb.bin`
    - TODO: instructions for other programs.
 4. Compute 8 bit file checksum in `mb.bin` and replace byte at `0x1fef` so that sum is `0`. TODO: include program to do this.
 
