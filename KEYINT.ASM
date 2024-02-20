@@ -421,7 +421,7 @@ KeyboardHdwrInt Proc    Far
                 Jmp     KeyBeepReturn           ;...else beep and return
 KeyIntReturn:
                 Mov     Al,PICEOI               ;Restore interrupts
-                Out     PortPICOCW2,Al          ;...for further keyboard entry
+                Out     PortPICOCW2,Al          ;...for futher keyboard entry
 KeyReturnNoEOI:
                 Pop     Es                      ;Restore the
                 Pop     Ds                      ;...R

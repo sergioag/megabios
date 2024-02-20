@@ -291,6 +291,10 @@ Ok8088:
 
                 ;       Test if refresh working
 
+                ;       NOTE: this test was removed in cloned copies
+                ;       as it is likely to fail on anything other
+                ;       than a 4.77 MHz 8088
+%If (1) Then (
                 Mov     Cx,0A00H                ;Un-noticable wait time
 RefTstLoop:
                 Loop    RefTstLoop              ;Loop for a short while
@@ -306,6 +310,12 @@ RefTstLoop:
                 Jbe     RefOk                   ;Jump if ok and continue
 DmaErr:
                 Mov     Bp,RefreshErr           ;Error = Refresh Error
+) Else (
+                ;       Bypass DMA refresh test
+                Mov     Bp,0                    ;Clear error flag
+%Repeat	(01CH) (Nop
+)
+) iF
 
                 ;       Initialize Real Time Clock (Channel 0 of 8253)
 RefOk:

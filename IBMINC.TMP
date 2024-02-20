@@ -220,7 +220,7 @@ SioOverrun      Equ     00000010B       ;Receive overrun
 SioParityError  Equ     00000100B       ;Receive parity error
 SioFramingErr   Equ     00001000B       ;Reveive parity error
 SioBreakDetect  Equ     00010000B       ;Receive line is in break condition
-SioTxReady      Equ     00100000B       ;Trasmitter holding register empty
+SioTxReady      Equ     00100000B       ;Transmitter holding register empty
 SioTxEmpty      Equ     00100000B       ;All data bits have cleared transmitter
 SioNoIntPending Equ     00000001B       ;No interrupt condition exists
 SioRxLineInt    Equ     00000110B       ;Receiver caused interrupt
@@ -353,7 +353,7 @@ $Eject
 
 PortColorMode   Equ     3D8H            ;Color board mode select register
 PortColorColor  Equ     3D9H            ;Color select register
-PorColorStatus  Equ     3DAH            ;Color status register
+PortColorStatus Equ     3DAH            ;Color status register
 PortColorLPClr  Equ     3DBH            ;Clear light pen detector
 PortColorLPSet  Equ     3DCH            ;Preset light pen detector
 PortColorIndex  Equ     3D4H            ;6845 Index register

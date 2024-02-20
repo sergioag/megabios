@@ -93,8 +93,8 @@ PrinterTrapAddr         Dd      1 Dup (?)       ;Printer driver vector
 BasicTrapAddr           Dd      1 Dup (?)       ;Cassette basic vector
 BootTrapAddr            Dd      1 Dup (?)       ;Bootstrap loader trap vector
 TODTrapAddr             Dd      1 Dup (?)       ;Time of day vector
-KeyBreakTrapAddr        Dd      1 Dup (?)       ;Keyboard break aDd     ?ress
-TickTrapAddr            Dd      1 Dup (?)       ;Timer break aDd        ?ress
+KeyBreakTrapAddr        Dd      1 Dup (?)       ;Keyboard break address
+TickTrapAddr            Dd      1 Dup (?)       ;Timer break address
 
                 ;       Data Pointers
 

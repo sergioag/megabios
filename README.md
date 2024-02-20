@@ -16,8 +16,6 @@ More information about DTC, MEGA-BIOS and it's legacy can be found [here](https:
 
 #### Goals
 
-This is the original branch, which is meant only for archiving the original source code, as shown on the listing. As such, the goals are:
-
 1. Preserve the original source code exactly as it was printed.
 2. Document the source build process.
 3. Provide fixes and updates to known bugs.
