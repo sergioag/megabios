@@ -1,0 +1,14 @@
+MB.LNK AD(SM(&
+	FlasherSegment(0H),&
+	IntSegment(0H),&
+	BiosStack(300H),&
+	BiosDataArea(400H),&
+	HiStack(800H),&
+	MonoSeg(0B0000H),&
+	ColorSeg(0B8000H),&
+	IOROMSeg(0C0000H),&
+	Bios(0F0000H),&
+	BasicSeg(0F6000H),&
+	ReleaseDate(0FFFF5H))) &
+BS ST(POREntry) &
+TO MB
