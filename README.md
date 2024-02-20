@@ -6,6 +6,8 @@ Copyright &copy; 1983 Display Telecommunications Corporation (DTC)
 
 Copyright &copy; 1985-1986 International Business Machines Corporation (IBM)
 
+Author:	Don K. Harrison
+
 ### The Project
 
 This project is the work of @FinnJorgensen, @sergioag and @640-KB to reconstruct MEGA-BIOS V1.0 from the printed source code originally sold by DTC.
