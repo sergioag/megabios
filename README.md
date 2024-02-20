@@ -14,15 +14,6 @@ More information about DTC, MEGA-BIOS and it's legacy can be found [here](https:
 
 #### Goals
 
+This is the original branch, which is meant only for archiving the original source code, as shown on the listing. As such, the goals are:
+
 1. Preserve the original source code exactly as it was printed.
-2. Document the source build process.
-3. Provide fixes and updates to known bugs.
-
-### Known Issues
-
-#### V1.0
-1. INITIAL.ASM: POST DMA Refresh test checks for a counter reading between 270H-290H after a busy Loop of 0A00H iterations. This will likely fail on anything other than a 4.77MHz 8088.
-2. VIDEO.ASM: Light pen incorrectly checks for trigger as active high, but is actually active low.
-3. VIDEO.ASM: During CGA snow/blanking wait, incorrectly jumps to outer loop instead of inner loop.
-4. VIDEO.ASM: `Mov Bl,OffsetTable[Bx]` ASM 2.x requires `Mov Bl,Byte Ptr OffsetTable[Bx]`. TODO: confirm this is a change in behavior to ASM 1.x.
-5. VIDEO.ASM: POST Memory test display occurs prior to video option ROM scan, so is not shown on EGA/VGA. Error messages are also displayed if an EGA/VGA card is installed.
