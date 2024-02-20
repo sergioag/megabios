@@ -3,39 +3,40 @@ $Pagelength (80) Pagewidth (132) Debug Nogen
 Name IbmInc
 
 
-;    Author:	  Don K. Harrison
+;    Author:      Don K. Harrison
 
-;    Start date:  December 28, 1983	  Last edit:  December 28, 1983
+;    Start date:  December 28, 1983       Last edit:  December 28, 1983
 
-;		************************
-;		*  Module Description  *  
-;		************************
+;               ************************
+;               *  Module Description  *
+;               ************************
 ;
-;	This module is a dummy assembly of the include file used
-;    by all modules.
-
-
-
-
-
-;	  (c) Display Telecommunications Corporation, 1983
-;			All Rights Reserved
-$Eject
-
-
-;		**********************
-;		*  Revision History  *  
-;		**********************
+;       This module is a dummy assembly of the include file used
+;   by all modules.
 
 
 
 
 
 
+;            (c) Display Telecommunications Corporation, 1983
+;                      All Rights Reserved
 
 $Eject
 
-;	Ibminc.tmp file same as IbmInc except $Nolist command commented Out
+
+;               **********************
+;               *  Revision History  *
+;               **********************
+
+
+
+
+
+
+
+$Eject
+;        IbmInc.tmp file same as IbmInc except $NoList command commented out
 $Include (Ibminc.tmp)
 
 End
