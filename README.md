@@ -10,7 +10,7 @@ Author:	Don K. Harrison
 
 ### The Project
 
-This project is the work of @FinnJorgensen, @sergioag and @640-KB to reconstruct MEGA-BIOS V1.0 from the printed source code originally sold by DTC.
+This project is the work of @FinnJorgensen, @sergioag and @640-KB to reconstruct MEGA-BIOS V1.0 from the [printed source code listing](https://theretroweb.com/motherboard/manual/dtc-mega-bios-listing-65a16bd9ed44e544310124.pdf) originally sold by DTC.
 
 More information about DTC, MEGA-BIOS and it's legacy can be found [here](https://forum.vcfed.org/index.php?threads/display-telecommunications-corporation-megaboard.63853/) and [here](https://forum.vcfed.org/index.php?threads/anonymous-has-been-found.1246341/).
 
@@ -26,13 +26,11 @@ More information about DTC, MEGA-BIOS and it's legacy can be found [here](https:
 
 1. A PC running real mode DOS, or emulator: [MartyPC](https://github.com/dbalsom/martypc), [VirtualXT](https://virtualxt.org/) or [86Box](https://86box.net/) are suggested. Note: since the `LINK86`/`LOC86` command line requires STDIN redirection, DOSBox will not work.
 2. Intel ASM86 Macro Assembler complete tools: `ASM86.EXE`, `DXC.EXE`, `LINK86.EXE`, `LOC86.EXE` and `OH86.EXE` ([here](https://www.os2museum.com/wp/the-ibm-pc-bios-and-intel-isis-ii/) or [here](https://winworldpc.com/product/intel-asm86-macro-assembler/31)).
-3. Compile the checksum tool: `cc -o checksum tools/checksum.c`
 
 **Steps:**
 
-1. Make sure ASM86 directory is in your `PATH` environment variable (ex: `PATH=C:\ASM86` or whever it is located).
-2. Run `BUILD.BAT` in a DOS environment, which will produce `MB.IMG`, a binary file 8193 bytes long.
-3. Run `./checksum MB.IMG mb.bin` to generate the final output file `mb.bin`, 8192 bytes long, with the correct checksum.
+1. Make sure ASM86 directory is in your `PATH` environment variable (ex: `PATH=C:\ASM86` or wherever it is located).
+2. Run `BUILD.BAT` in a DOS environment, which will produce `MEGABIOS.ROM`, a binary ROM file 8192 bytes long.
 
 ### Known Issues
 
