@@ -6,7 +6,7 @@ _TEXT   SEGMENT
 ;----------------------------------------------------------------------------;
 ; A simple DOS 8 bit checksum calculator for ROM images.
 ;
-; Copyright (c) 2022-2024, 640KB and contributors
+; Copyright (c) 2022-2024, 640KB and contributors under GPLv3
 ;
 ;----------------------------------------------------------------------------;
 ;
@@ -39,7 +39,7 @@ _TEXT   SEGMENT
 ;			64K = 8
 ;----------------------------------------------------------------------------;
 
-VER_NAME	EQU	'MBCHK'
+VER_NAME	EQU	'MEGA-BIOS Checksum Generator'
 VER_NUM	EQU	'1.0'
 COPY_YEAR	EQU	'2024'
 
