@@ -1,185 +1,184 @@
 $Title ('DTC/PC BIOS Print Screen Driver V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
+$Pagelength (80) Pagewidth (132) Debug Nogen 
 Name PrintScreen
 
 
-;	Author:	Don K. Harrison
+;    Author:      Don K. Harrison
 
-;	Start date:	December 7,1983	 Last edit:	December 28,1983
-
-
-;		************************
-;		*  Module Description  *
-;		************************
-;
-;	 This module contains the print screen interrupt routine
-;    (Int 5)
+;    Start date:  December 7, 1983      Last edit:  December 20, 1983
 
 
-
-
-
-;	(c) Display Telecommunications Corporation,1983
-;			All Rights Reserved
-
-$Eject
-
-
-;		**********************
-;		*  Revision History  *
-;		**********************
+;               ************************
+;               *  Module Description  *
+;               ************************
+;       This module contains the print screen interrupt routine
+;  (Int 5).
 
 
 
 
 
 
+;            (c) Display Telecommunications Corporation, 1983
+;                      All Rights Reserved
 
 $Eject
 
-;		********************
-;		*  Public Symbols  *
-;		********************
 
-		Public	PrintScreenInt
-
-
-;		*************
-;		*  Equates  *
-;		*************
-
-AsciiLineFeed		Equ	0AH		;Ascii line feed
-AsciiCarriageReturn	Equ	0DH		;Ascii carriage return
+;               **********************
+;               *  Revision History  *
+;               **********************
 
 
-$Include (Ibminc)
+
+
+
+
+
 $Eject
 
-;		*******************
-;		*  Data Segments  *
-;		*******************
+;               ********************
+;               *  Public Symbols  *
+;               ********************
 
-BiosDataArea	Segment Public
-		Extrn PrintScnStatus:Byte
-BiosDataArea	Ends
+                Public  PrintScreenInt
+
+
+;               *************
+;               *  Equates  *
+;               *************
+
+AsciiLineFeed           Equ     0AH             ;Ascii line feed
+AsciiCarriageReturn     Equ     0DH             ;Ascii carriage return
+
+
+$Include (IbmInc)
 $Eject
 
-;		******************
-;		*  Code Segment  *
-;		******************
+;               *******************
+;               *  Data Segments  *
+;               *******************
 
-Bios		Segment Common
+BiosDataArea    Segment Public
+                Extrn PrintScnStatus:Byte
+BiosDataArea    Ends
+$Eject
 
-		Org	0FF54H			;Align with Pc and Xt
+;               ******************
+;               *  Code Segment  *
+;               ******************
 
-		Assume	Cs:Bios,Ds:BiosDataArea
+Bios            Segment Common
 
- PrintScreenInt	Proc	Far
-		Sti				;Restore interrupts
-		Push	Ds			;................
-		Push	Ax			;.  Save	.
-		Push	Bx			;.		.
-		Push	Cx			;.    Registers .
-		Push	Dx			;................
-		Mov	Ax,BiosDataArea		;Load our segnent
-		Mov	Ds,Ax			;...into Ds
-		Cmp	PrintScnStatus,1	;In progress already?
-		Je	InProgressEnd		;...jumP if so and return
+                Org     0FF54H                  ;Align with Pc and Xt
 
-		;	Set status = 1 = in progress
+                Assume  Cs:Bios, Ds:BiosDataArea
 
-		Mov	PrintScnStatus,1	;set status
+PrintScreenInt  Proc    Far
+                Sti                             ;Restore interrupts
+                Push    Ds                      ;................
+                Push    Ax                      ;.  Save        .
+                Push    Bx                      ;.              .
+                Push    Cx                      ;.    Registers .
+                Push    Dx                      ;................
+                Mov     Ax,BiosDataArea         ;Load our segment
+                Mov     Ds,Ax                   ;...into Ds
+                Cmp     PrintScnStatus,1        ;In progress already?
+                Je      InProgressEnd           ;...jump if so and return
 
-		;	Initialize printer
+                ;       Set status = 1 = in progress
 
-		Call	PCrlf			;Only needs a line feed
+                Mov     PrintScnStatus,1        ;Set status
 
-		;	Get cursor position
+                ;       Initialize printer
 
-		Mov	Ah,VidCmdInfo		;Get page number and info
-		Int	TrapVideo		;...for use later
-		Push	Ax			;Save colunns
-		Mov	Ah,VidCmdRdCurPos	;Read cursor position
-		Int	TrapVideo		;...for restoration purposes
-		Pop	Ax			;Get back coluams
-		Push	Dx			;...and Save Cursor pos
-		Mov	Ch,25			;Always do 25 rows
-		Mov	Cl,Ah			;...and (Columns) columns
-		Xor	Dx,Dx			;Start of screen = 0,0
+                Call    PCrlf                   ;Only needs a line feed
 
-		;	Print the screen
+                ;       Get cursor position
+
+                Mov     Ah,VidCmdInfo           ;Get page number and info
+                Int     TrapVideo               ;...for use later
+                Push    Ax                      ;Save columns
+                Mov     Ah,VidCmdRdCurPos       ;Read cursor position
+                Int     TrapVideo               ;...for restoration purposes
+                Pop     Ax                      ;Get back columns
+                Push    Dx                      ;...and save cursor pos
+                Mov     Ch,25                   ;Always do 25 rows
+                Mov     Cl,Ah                   ;...and (Columns) columns
+                Xor     Dx,Dx                   ;Start of screen = 0,0
+
+                ;       Print the screen
 
 PrintScreenLoop:
-		Mov	Ah,VidCmdCurPos		;Set cursor to next (first)
-		Int	TrapVideo		;...line
-		Mov	Ah,VidCmdRdCurChAt	;Read the
-		Int	TrapVideo		;...Character
-		Or	Al,Al			;If zero,
-		Jnz	CharOk			;...then convert
-		Mov	Al,' '			;...to a Space
+                Mov     Ah,VidCmdCurPos         ;Set cursor to next (first)
+                Int     TrapVideo               ;...line
+                Mov     Ah,VidCmdRdCurChAt      ;Read the
+                Int     TrapVideo               ;...character
+                Or      Al,Al                   ;If zero,
+                Jnz     CharOk                  ;...then convert
+                Mov     Al,' '                  ;...to a space
 CharOk:
 
-		;	Print the character
+                ;       Print the character
 
-		Push	Dx			;Save cursor position
-		Xor	Dx,Dx			;Select printer 1
-		Mov	Ah,Dl			;...print command
-		Int	TrapPrintDrive		;Print it
-		Pop	Dx			;Restore cursor
+                Push    Dx                      ;Save cursor position
+                Xor     Dx,Dx                   ;Select printer 1
+                Mov     Ah,Dl                   ;...print command
+                Int     TrapPrintDrive          ;Print it
+                Pop     Dx                      ;Restore cursor
 
-		;	Test for error
+                ;       Test for error
 
-		Test	Ah,00100101B		;Error if any bit set
-		Jz	NoError			;...jump if no error
-		Mov	PrintScnStatus,0FFH	;Error status
-		Jmp	Short PrintScnEnd
-		
-		;	Increment to next character position
+                Test    Ah,00100101B            ;Error if any bit set
+                Jz      NoError                 ;...jump if no error
+                Mov     PrintScnStatus,0FFH     ;Error status
+                Jmp     Short PrintScnEnd
+
+                ;       Increment to next character position
 NoError:
-		Inc	Dl			;Bump column
-		Cmp	Cl,Dl			;...is it right limit?
-		Jnz	PrintScreenLoop		;...if not,loop
-		Xor	Dl,Dl			;Do carriage return on screen
-		Call	PCrlf			;Do carriage return on printer
-		Inc	Dh			;Increment row
-		Cmp	Dh,Ch			;...over Limit?
-		Jnz	PrintScreenLoop		;...jump if not
-		Mov	PrintScnStatus,0	;Indicate all done
+                Inc     Dl                      ;Bump column
+                Cmp     Cl,Dl                   ;...is it right limit?
+                Jnz     PrintScreenLoop         ;...if not, loop
+                Xor     Dl,Dl                   ;Do carriage return on screen
+                Call    PCrlf                   ;Do carriage return on printer
+                Inc     Dh                      ;Increment row
+                Cmp     Dh,Ch                   ;...over limit?
+                Jnz     PrintScreenLoop         ;...jump if not
+                Mov     PrintScnStatus,0        ;Indicate all done
 
-		;	Restore cursor and return
+                ;       Restore cursor and return
 
 PrintScnEnd:
-		Pop	Dx			;Restore original
-		Mov	Ah,VidCmdCurPos		;...cursor
-		Int	TrapVideo		;...to screen
+                Pop     Dx                      ;Restore original
+                Mov     Ah,VidCmdCurPos         ;...cursor
+                Int     TrapVideo               ;...to screen
 InProgressEnd:
-		Pop	Dx			;................
-		Pop	Cx			;. Restore	.
-		Pop	Bx			;.  Registers	.
-		Pop	Ax			;.	and	.
-		Pop	Ds			;.	 Return	.
-		Iret				;................
+                Pop     Dx                      ;................
+                Pop     Cx                      ;. Restore      .
+                Pop     Bx                      ;.  Registers   .
+                Pop     Ax                      ;.      and     .
+                Pop     Ds                      ;.       Return .
+                Iret                            ;................
 
+;               *****************************
+;               *  Printer Carriage Return  *
+;               *****************************
 
-;		*****************************
-;		*  Printer Carriage Return  *
-;		*****************************
+PCrlf           Proc    Near
+                Push    Dx                      ;Save Dx
+                Xor     Dx,Dx                   ;Select printer 1
+                Mov     Ah,Dl                   ;...and command = print
+                Mov     Al,AsciiLineFeed        ;Send LF first
+                Int     TrapPrintDrive          ;...like IBM does
+                Xor     Ah,Ah                   ;Ignore status
+                Mov     Al,AsciiCarriageReturn  ;Send Cr
+                Int     TrapPrintDrive          ;...next
+                Pop     Dx                      ;Restore Dx
+                Ret                             ;...and return
+PCrlf           Endp
 
-PCrlf		Proc	Near
-		Push	Dx			;Save Dx
-		Xor	Dx,Dx			;Select printer 1
-		Mov	Ah,Dl			;...and command = print
-		Mov	Al,AsciiLineFeed	;Send LF first
-		Int	TrapPrintDrive		;...like IBM does
-		Xor	Ah,Ah			;Ignore status
-		Mov	Al,AsciiCarriageReturn	;Send Cr
-		Int	TrapPrintDrive		;...next
-		Pop	Dx			;Restore Dx
-		Ret				;...and return
-PCrlf		Endp
+PrintScreenInt  Endp
 
-PrintScreenInt	Endp
-
-Bios		Ends
+Bios            Ends
 
 End
