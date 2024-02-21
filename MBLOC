@@ -1,4 +1,4 @@
-MB.LNK AD(SM(&
+MBTMP.LNK AD(SM(&
 	FlasherSegment(0H),&
 	IntSegment(0H),&
 	BiosStack(300H),&
@@ -12,4 +12,4 @@ MB.LNK AD(SM(&
 	RomChecksum(0FFFE0H),&
 	ReleaseDate(0FFFF5H))) &
 BS ST(POREntry) &
-TO MB
+TO MBTMP
