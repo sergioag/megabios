@@ -314,7 +314,7 @@ SetModeJump1:
 
                 Xor     Bh,Bh                   ;Form index into table (Bl=mode)
                 Push    Bx                      ;Save Bx=crt mode
-                Mov     Bl,OffsetTable[Bx]      ;Load the offset
+                Mov     Bl,Byte Ptr OffsetTable[Bx]     ;Load the offset
                 Add     Si,Bx                   ;...and point at right list
                 Mov     Cx,16                   ;Do 16 bytes
 

@@ -9,6 +9,7 @@ MB.LNK AD(SM(&
 	IOROMSeg(0C0000H),&
 	Bios(0F0000H),&
 	BasicSeg(0F6000H),&
+	RomChecksum(0FFFE0H),&
 	ReleaseDate(0FFFF5H))) &
 BS ST(POREntry) &
 TO MB

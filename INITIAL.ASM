@@ -113,6 +113,15 @@ ColorSeg        Ends
 
 $Eject
 ;               ******************************
+;               *  Segment for ROM Checksum  *
+;               ******************************
+RomChecksum     Segment byte
+
+                Db      0                       ; Will be calculated during build
+
+RomChecksum     Ends
+
+;               ******************************
 ;               *  Segment at End of Memory  *
 ;               ******************************
 
@@ -315,7 +324,7 @@ DmaErr:
                 Mov     Bp,0                    ;Clear error flag
 %Repeat	(01CH) (Nop
 )
-) iF
+) fI
 
                 ;       Initialize Real Time Clock (Channel 0 of 8253)
 RefOk:
