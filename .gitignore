@@ -1,0 +1,8 @@
+*.OBJ
+*.LST
+*.LNK
+*.HEX
+*.IMG
+*.ROM
+*.BIN
+MBTMP
