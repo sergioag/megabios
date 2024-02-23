@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Equipment Determination and Memory Size  V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Equipmnt
+Title 'DTC/PC BIOS Equipment Determination and Memory Size  V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -24,7 +22,6 @@ Name Equipmnt
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -37,7 +34,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -52,8 +48,7 @@ $Eject
 
                 ;       All Equates in include file: IbmInc
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -62,7 +57,6 @@ $Eject
 BiosDataArea    Segment Public
                 Extrn MemorySize:Word, EquipFlag:Word
 BiosDataArea    Ends
-$Eject
 
 ;               ******************
 ;               *  Code Segment  *

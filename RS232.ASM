@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS RS232 Driver V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name RS232
+Title 'DTC/PC BIOS RS232 Driver V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name RS232
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -49,8 +45,7 @@ $Eject
 
                 ;       All Equates in include file: IbmInc
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -63,7 +58,6 @@ IntSegment      Ends
 BiosDataArea    Segment Public
                 Extrn RS232Base:Word, RS232TimeOut:Byte
 BiosDataArea    Ends
-$Eject
 
 ;               ******************
 ;               *  Code Segment  *

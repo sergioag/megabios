@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Interrupts V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name  Ints
+Title 'DTC/PC BIOS Interrupts V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -21,7 +19,6 @@ Name  Ints
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -34,7 +31,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -51,8 +47,7 @@ $Eject
 
                 ;       All Equates in include file: IbmInc
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 ;               *********************************
 ;               *  Ram Based Interrupt Vectors  *
 ;               *********************************
@@ -104,7 +99,6 @@ VideoGraphicsTrapAddr   Dd      1 Dup (?)       ;Video graphics characters
 
 IntSegment      Ends
 
-$Eject
 ;               **********************
 ;               *  Public Variables  *
 ;               **********************
@@ -254,7 +248,7 @@ NMIReturn:
 ParityMsg       Db      'Parity error at: ?????',0
 ContMsg         Db      ' Cont?',0
 NMIInt          Endp
-$Eject
+
 ;               ******************************************
 ;               *  Rom Based Vector Initialization Data  *
 ;               ******************************************
@@ -296,7 +290,6 @@ RomVectors      Label   DWord
                 Dw      FloppyParamsPointer     ;Disk parameters
                 Dw      0                       ;Video graphics characters
 
-$Eject
 ;               *******************************
 ;               *  Illegal Interrupt Handler  *
 ;               *******************************

@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Public Data Definitions V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Publics
+Title 'DTC/PC BIOS Public Data Definitions V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name Publics
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -52,7 +48,6 @@ $Eject
                 Public TimerHigh, TimerOverflow, BiosBreak, ResetFlag
                 Public FixedDisk1, FixedDisk2, PrintTimeOut, RS232TimeOut
                 Public BufferStart, BufferEnd, PrintScnStatus
-$Eject
 ;               ***********************
 ;               *  Bios Data Segment  *
 ;               ***********************

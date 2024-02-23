@@ -1,19 +1,18 @@
 ;               *************************
 ;               *  Global Include File  *
 ;               *************************
-$NoList
 
 
 ;               ************
 ;               *  Macros  *
 ;               ************
 
-                %*Define (Bus(Value))
-                ( Mov   Al,%Value
-                  Out   0C0H,Al )
+Bus MACRO Value
+                Mov     Al,Value
+                Out     0C0H,AL
+ENDM Bus
 
 
-$Eject
 
 ;               *************
 ;               *  Equates  *
@@ -77,7 +76,6 @@ PortCTCReadCh0  Equ     40H             ;Read channel 0
 PortCTCReadCh1  Equ     41H             ;Read channel 1
 PortCTCReadCh2  Equ     42H             ;Read channel 2
 CTCRefreshDiv   Equ     18              ;Real time clock divisor constant
-$Eject
 
 ;               ***************************************
 ;               *  Programmable Peripheral Interface  *
@@ -134,7 +132,6 @@ PPICRAMChk      Equ     10000000B       ;Status of system board parity f/f
 PortPPIMode     Equ     63H             ;Write mode word
 PPIBStdMode     Equ     99H             ;Standard mode word = 99H
 
-$Eject
 ;               *********************************
 ;               *  Option Adapter Peripherials  *
 ;               *********************************
@@ -166,7 +163,6 @@ EXPEnStatus     Equ     00000001B       ;1=enabled, 0=disabled
 EXPWaitRqFlag   Equ     00000010B       ;State of wait state request flag
 EXPSwitches     Equ     11110000B       ;Dip switch state
 
-$Eject
 ;               ********************************************
 ;               *  Asynchronous Communications Controller  *
 ;               ********************************************
@@ -200,7 +196,6 @@ PortSio2LCR     Equ     2FBH            ;Line control register
 PortSio2MCR     Equ     2FCH            ;Modem control register
 PortSio2LSR     Equ     2FDH            ;Line status register
 PortSio2MSE     Equ     2FEH            ;Modem status register
-$Eject
 ;               ***************************
 ;               *  Control and Flag Bits  *
 ;               ***************************
@@ -264,7 +259,6 @@ Sio3600Baud     Equ     32              ;Divisor value for 3600 baud
 Sio4800Baud     Equ     24              ;Divisor value for 4800 baud
 Sio7200Baud     Equ     16              ;Divisor value for 7200 baud
 Sio9600Baud     Equ     12              ;Divisor value for 9600 baud
-$Eject
 ;               **********************
 ;               *  Prototyping Card  *
 ;               **********************
@@ -303,7 +297,6 @@ PrintSelectOut  Equ     00010000B       ;Printer selected bit
 PrintPaperOut   Equ     00100000B       ;Printer paper out status bit
 PrintAck        Equ     01000000B       ;Printer ACK signal state (low active)
 PrintBusy       Equ     10000000B       ;Printer busy signal state (low active)
-$Eject
 ;               ******************************
 ;               *  Monochrome Video Adapter  *
 ;               ******************************
@@ -346,7 +339,6 @@ MonoStartHigh   Equ     12              ;Pointer to screen start address high
 MonoStartLow    Equ     13              ;Pointer to screen start address low
 CursorHigh      Equ     14              ;Pointer to cursor position address hi
 CursorLow       Equ     15              ;Pointer to cursor position address low
-$Eject
 ;               ****************************
 ;               *  Color Graphics Adapter  *
 ;               ****************************
@@ -374,7 +366,6 @@ ColorBkgnd      Equ     00001111B       ;Background or boarder selection
 ColorIntense    Equ     00010000B       ;Select intensified colors
 ColorPalette    Equ     00100000B       ;Palette toggle bit
 
-$Eject
 ;               **********************************
 ;               *  Flexible Diskette Controller  *
 ;               **********************************
@@ -436,7 +427,6 @@ FDCGPLReadWrite Equ     42              ;Gap length (during read or write)
 FDCHLT          Equ     1               ;Head load time
 
 
-$Eject
 
 ;               *********************************
 ;               *  Vector Location Definitions  *
@@ -476,7 +466,6 @@ TrapDiskParams  Equ     30              ;Disk parameters
 TrapVideoExt    Equ     31              ;Video external pointer
 
 
-$Eject
 ;               *************************************
 ;               *  Diskette Driver Command Equates  *
 ;               *************************************
@@ -488,7 +477,6 @@ DiskCmdWrite    Equ     3
 DiskCmdVerify   Equ     4
 DiskCmdFormat   Equ     5
 
-$Eject
 
 ;               **********************************
 ;               *  Video Driver Command Equates  *
@@ -511,7 +499,6 @@ VidCmdRdDot     Equ     13
 VidCmdWrTTY     Equ     14
 VidCmdInfo      Equ     15
 
-$Eject
 
 ;               ***************************************
 ;               *  Serial I/O Driver Command Equates  *
@@ -521,4 +508,3 @@ SioCmdInit      Equ     0
 SioCmdSend      Equ     1
 SioCmdReceive   Equ     2
 SioCmdStatus    Equ     3
-$List

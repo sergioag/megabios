@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Initialization Module V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Initial
+Title 'DTC/PC BIOS Initialization Module V1.0'
 
 
 ;    Author:        Don K. Harrison
@@ -22,7 +20,6 @@ Name Initial
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 ;               ********************
 ;               *  Public Symbols  *
 ;               ********************
@@ -56,8 +52,7 @@ IOROMErr        Equ     00100000B               ;Error in expansion ch. ROM
 AsciiCarriage   Equ     0DH                     ;Carriage return
 AsciiLineFeed   Equ     0AH                     ;Line feed
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -111,7 +106,6 @@ ColorSeg        Segment Public
 ColorSeg        Ends
 
 
-$Eject
 ;               ******************************
 ;               *  Segment for ROM Checksum  *
 ;               ******************************
@@ -134,7 +128,7 @@ ReleaseDate     Segment byte
                 Db      '12/23/83DKH'
 
 ReleaseDate     Ends
-$Eject
+
 ;               ******************
 ;               *  Code Segment  *
 ;               ******************
@@ -303,7 +297,7 @@ Ok8088:
                 ;       NOTE: this test was removed in cloned copies
                 ;       as it is likely to fail on anything other
                 ;       than a 4.77 MHz 8088
-%If (1) Then (
+IF 1
                 Mov     Cx,0A00H                ;Un-noticable wait time
 RefTstLoop:
                 Loop    RefTstLoop              ;Loop for a short while
@@ -319,12 +313,11 @@ RefTstLoop:
                 Jbe     RefOk                   ;Jump if ok and continue
 DmaErr:
                 Mov     Bp,RefreshErr           ;Error = Refresh Error
-) Else (
+ELSE
                 ;       Bypass DMA refresh test
                 Mov     Bp,0                    ;Clear error flag
-%Repeat	(01CH) (Nop
-)
-) fI
+                01CH DUP (NOP)
+ENDIF
 
                 ;       Initialize Real Time Clock (Channel 0 of 8253)
 RefOk:
@@ -577,7 +570,7 @@ PrintBaseLoop:
                 Mov     Dx,Cs:[Si]              ;Load Ax with first (next) base
                 Mov     Al,0AAH                 ;Try to write bit pattern
                 Out     Dx,Al                   ;...to printer port
-                %Bus    (0FFH)                  ;Force floating bus hi
+                Bus    0FFH                     ;Force floating bus hi
                                                 ;MISSING LINE (Seems part of macro expansion above)
                 In      Al,Dx                   ;...then read data back
                 Cmp     Al,0AAH                 ;...and see if it took
@@ -600,7 +593,7 @@ PrinterNotThere:
                 Mov     Dx,PortSio1LCR          ;Use LCR for test
                 Mov     Al,00011010B            ;Setup LCR for standard mode
                 Out     Dx,Al                   ;...as a test of it's existance
-                %Bus    (0FFH)                  ;Force floating bus hi
+                Bus     0FFH                    ;Force floating bus hi
                 In      Al,Dx                   ;...then read back data
                 Cmp     Al,00011010B            ;...and see if it took
                 Jne     Sio1NotThere            ;...jump if not else store
@@ -611,7 +604,7 @@ Sio1NotThere:
                 Mov     Dx,PortSio2LCR          ;Use LCR for test
                 Mov     Al,00011010B            ;Setup LCR for standard mode
                 Out     Dx,Al                   ;...as a test of it's existance
-                %Bus    (0FFH)                  ;Force floating bus hi
+                Bus     0FFH                    ;Force floating bus hi
                 In      Al,Dx                   ;...then read back data
                 Cmp     Al,00011010B            ;...and see if it took
                 Jne     Sio2NotThere            ;...jump if not else, store
@@ -757,7 +750,6 @@ SkipBootCr:
 NullReturn:
                 Iret                            ;Null return from interrupt
 ErrorMsg        Db      'System Error #  , Continue? ',0
-$Eject
 ;               ************************
 ;               *  System Memory Test  *
 ;               ************************

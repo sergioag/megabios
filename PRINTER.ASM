@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Parallel Printer Driver V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Printer
+Title 'DTC/PC BIOS Parallel Printer Driver V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name Printer
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -50,8 +46,7 @@ $Eject
 
                 ;       All Equates in include file: IbmInc
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -60,7 +55,6 @@ $Eject
 BiosDataArea    Segment Public
                 Extrn PrintTimeOut:Byte, PrinterBase:Word
 BiosDataArea    Ends
-$Eject
 
 ;               ******************
 ;               *  Code Segment  *

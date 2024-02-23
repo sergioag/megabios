@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Useful Procedures V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Useful
+Title 'DTC/PC BIOS Useful Procedures V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -31,7 +29,6 @@ Name Useful
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -44,7 +41,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -62,8 +58,7 @@ $Eject
 AsciiCarriage   Equ     0DH                     ;Carriage return
 AsciiLineFeed   Equ     0AH                     ;Line feed
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 ;               *******************
 ;               *  Data Segments  *
 ;               *******************
@@ -73,7 +68,6 @@ BiosDataArea    Segment Public
                 Extrn EquipFlag:Word
 BiosDataArea    Ends
 
-$Eject
 ;               ******************
 ;               *  Code Segment  *
 ;               ******************

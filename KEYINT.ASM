@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Keyboard Interrupt Service Routine V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name KeyInt
+Title 'DTC/PC BIOS Keyboard Interrupt Service Routine V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name KeyInt
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -50,7 +46,7 @@ $Eject
 
                 ;       Equates in include file: IbmInc
 
-$Include (IbmInc)
+Include IBMINC
 InsBit          Equ     10000000B               ;Flag bits
 CapsBit         Equ     01000000B               ;...indicating
 NumBit          Equ     00100000B               ;...shift
@@ -76,7 +72,6 @@ ControlZ        Equ     1AH                     ;Ascii code for control Z
 
 
 
-$Eject
 ;               ******************
 ;               *  Keyboard Map  *
 ;               ******************
@@ -154,7 +149,7 @@ $Eject
 ;44 0044 F10    005D SHF F10    0067 CTL F10    0071 ALT F10    2C
 ;45 --  NUM LK  --   NUM LK     --   NUM LK     -- NUM LK  A0 10100000
 ;46 --  SCL LK  --   SCL LK     --   SCL LK     -- SCL LK  90 10010000
-$Eject
+
 ;               ***************************
 ;               *  Keyboard Map By Value  *
 ;               ***************************
@@ -190,7 +185,6 @@ $Eject
 ;2D 78XX x      58XX X          18XX CAN        002D ALT x      18
 ;15 79XX y      59XX Y          19XX EM         0015 ALT y      19
 ;2C 7AXX z      58XX Z          1AXX SUB        002C ALT z      1A
-$Eject
 
 ;               Level Two Values
 
@@ -247,7 +241,6 @@ $Eject
 ;46 --  SCL LK  --   SCL LK     --  SCL LK      -- SCL LK      90 10010000
 ;45 --  NUM LK  --   NUM LK     --  NUM LK      -- NUM LK      A0 10100000
 ;3A --  CAP LK  --   CAP LK     --  CAP LK      -- CAP LK      C0 11000000
-$Eject
 
 ;               *******************
 ;               *  Data Segments  *
@@ -260,7 +253,6 @@ BiosDataArea    Segment Public
                 Extrn BufferEnd:Word, BiosBreak:Byte
                 Extrn CrtMode:Byte, CrtModeSet:Byte
 BiosDataArea    Ends
-$Eject
 
 ;               ******************
 ;               *  Code Segment  *
@@ -352,7 +344,6 @@ ALTCase         Db      0F9H,0FDH,002H,0E8H,0E9H,0EAH,0EBH,0ECH
 
 LevelTwoStruc   Ends
 
-$Eject
 ;               ******************************
 ;               *  Keypad Translation Table  *
 ;               ******************************
@@ -369,17 +360,14 @@ PadStruc        Ends
 ;               *  Structure Memory Allocation  *
 ;               *********************************
 ;       Align next to Keyboard Driver
-Org     0E987H - (Size(LevelOneStruc) + Size(LevelTwoStruc) + Size(PadStruc))
+Org     0E987H - (SIZE LevelOneStruc + SIZE LevelTwoStruc + SIZE PadStruc)
 
-$Nolist
 LevelOneTable   LevelOneStruc<>         ;MISSING LINE
 LevelTwoTable   LevelTwoStruc<>         ;MISSING LINE
 PadTable        PadStruc<>              ;MISSING LINE
-$List
 
 LastTableByte   Equ     $-1             ;This byte should be 0E986H
 
-$Eject
 ;               **************************
 ;               *  Keyboard Driver Code  *
 ;               **************************
@@ -734,7 +722,7 @@ PadShiftState:
                 Mov     Bx,Offset PadTable.Shift ;Use Shift table
                 Xlat    Cs:ByteType             ;Translate from scan to data
                 Jmp     KeyBufLoad
-$Eject
+
 ;               **************************
 ;               *  Load Keyboard Buffer  *
 ;               **************************

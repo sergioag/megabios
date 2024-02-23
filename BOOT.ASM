@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Bootstrap Loader V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Boot
+Title 'DTC/PC BIOS Bootstrap Loader V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -21,7 +19,6 @@ Name Boot
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -34,7 +31,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -50,8 +46,7 @@ BootOffset      Equ     7C00H                   ;Location of loaded boot code
 AsciiCarriage   Equ     0DH                     ;Carriage return code
 AsciiLineFeed   Equ     0AH                     ;Line feed code
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -63,6 +58,8 @@ IntSegment      Segment Public
 IntSegment      Ends
 
 BootSegment     Segment at 0
+                Org     BootOffset
+BootLocn        Label Far
 BootSegment     Ends
 
 BasicSeg        Segment Common
@@ -70,7 +67,6 @@ BasicSeg        Segment Common
                 Org     0
 Basic           Label Far
 BasicSeg        Ends
-$Eject
 
 ;               ******************
 ;               *  Code Segment  *
@@ -118,7 +114,7 @@ RetryLoop:
                 Int     TrapFDDriver            ;Execute disk I/O software
                 Jc      BootFailed              ;Jump and retry if error
                 Assume  Cs:BootSegment          ;Assume causes Jmp instr. to
-                Jmp     Far ptr BootOffset      ;...reference BootSegment
+                Jmp     BootLocn                ;...reference BootSegment
                 Assume  Cs:Bios                 ;Back to Bios
 BootFailed:
                 Pop     Ax                      ;Restore count

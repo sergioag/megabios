@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Print Screen Driver V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen 
-Name PrintScreen
+Title 'DTC/PC BIOS Print Screen Driver V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name PrintScreen
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -52,8 +48,7 @@ AsciiLineFeed           Equ     0AH             ;Ascii line feed
 AsciiCarriageReturn     Equ     0DH             ;Ascii carriage return
 
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -62,7 +57,6 @@ $Eject
 BiosDataArea    Segment Public
                 Extrn PrintScnStatus:Byte
 BiosDataArea    Ends
-$Eject
 
 ;               ******************
 ;               *  Code Segment  *

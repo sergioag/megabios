@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Stack V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Stack
+Title 'DTC/PC BIOS Stack V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -21,7 +19,6 @@ Name Stack
 
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
-$Eject
 ;               **********************
 ;               *  Revision History  *
 ;               **********************
@@ -32,7 +29,6 @@ $Eject
 
 
 
-$Eject
 
 
 ;               ********************

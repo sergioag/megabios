@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Video Driver V1.0')
-$Pagelength (80) Pagewidth (132) Debug
-Name Video
+Title 'DTC/PC BIOS Video Driver V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name Video
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -54,8 +50,7 @@ AsciiLineFeed   Equ     0AH                     ;...for
 AsciiCarriage   Equ     0DH                     ;...TTY
 AsciiBell       Equ     07H                     ;...procedure
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -78,7 +73,6 @@ MonoSeg         Ends
 ColorSeg        Segment Public
 ColorSeg        Ends
 
-$Eject
 
 ;               *****************
 ;               *  Stack Frame  *
@@ -150,7 +144,6 @@ VideoSegment    Equ     Word Ptr [Bp+0]         ;Video segment
 
 
 
-$Eject
 ;               ******************
 ;               *  Code Segment  *
 ;               ******************
@@ -216,7 +209,6 @@ SegNotMono:
                 Iret                            ;And return
 VideoDriver     Endp
 
-$Eject
 
 ;               ******************************************
 ;               *  Mode Tables - Aligned with PC and Xt  *
@@ -251,13 +243,10 @@ ParamOffStruc   Ends
                 ;       Table definition - done under $NoList
 
                 Org     0F0A4H                  ;Align with PC and Xt
-$NoList
 VidParamsPointer        ParameterStruc<>        ;MISSING LINE
 OffsetTable             ParamOffStruc<>         ;MISSING LINE
 ;MISSING LINE
-$List
 
-$Eject
 ;               ************************
 ;               *  Command Dispatcher  *
 ;               ************************
@@ -272,7 +261,7 @@ ComInRange:
                 Xor     Bh,Bh                   ;...and extend to word
                 Jmp     JumpTable[Bx]           ;...and jump to routine
 CommandDispatch Endp
-$Eject
+
 ;               **************************************
 ;               *  Command Procedure - Set New Mode  *
 ;               **************************************
@@ -384,7 +373,7 @@ CursPosClr:
                 Mov     CrtLength,Ax            ;.............from table
                 Ret                             ;Return, init complete
 SetMode         Endp
-$Eject
+
 ;               **********************************************
 ;               *  Command Procedure - Set New Cursor Value  *
 ;               **********************************************
@@ -428,7 +417,7 @@ ReadCursorPos   Proc    Near                    ;Read current cursor position
                 Mov     ReturnCursMode,Ax       ;...and store it in stack frame
                 Ret                             ;Then return
 ReadCursorPos   Endp
-$Eject
+
 ;               *******************************
 ;               *  Return Light Pen Position  *
 ;               *******************************
@@ -511,7 +500,7 @@ ResetTrigRtn:
                 Out     Dx,Al                   ;...(data irrelevant)
                 Ret                             ;...and return normally
 ReadLpPos       Endp
-$Eject
+
 ;               ***************************************
 ;               *  Command Procedure - Activate Page  *
 ;               ***************************************
@@ -532,7 +521,7 @@ ActivatePage    Proc    Near                    ;Activate new page
                 Call    LoadCursor              ;...and go load the cursor
                 Ret                             ;...then return
 ActivatePage    Endp
-$Eject
+
 ;               ********************************************
 ;               *  Command Procedure - Scroll Up and Down  *
 ;               ********************************************
@@ -664,7 +653,7 @@ BlankBotLoop:
 ScrollReturn:
                 Ret                             ;and return
 ScrollAlpha     Endp
-$Eject
+
 ;               ****************************
 ;               *  Common Graphics Scroll  *
 ;               ****************************
@@ -791,7 +780,7 @@ ClearGraphLoop:
                 Jnz     ClearGraphLoop          ;...and loop till clear
                 Ret                             ;...then return
 ScrollGraph     Endp
-$Eject
+
 ;               **********************************************************
 ;               *  Command Procedure - Read / Write Char. and/or Attrib  *
 ;               **********************************************************
@@ -899,7 +888,7 @@ HWaitWrite4:
                 Assume  Ds:BiosDataArea         ;...and tell ASM86
                 Ret                             ;...and return
 ReadWrite       Endp
-$Eject
+
 ;               *************************
 ;               *  Read Write Graphics  *
 ;               *************************
@@ -1076,7 +1065,7 @@ OddFieldWr:
                 Assume  Ds:BiosDataArea         ;Tell ASM86 data segment
                 Ret                             ;...then return
 WriteGraph      Endp
-$Eject
+
 ;               *******************
 ;               *  Read Graphics  *
 ;               *******************
@@ -1226,7 +1215,7 @@ MatchFound:
                 Add     Sp,8                    ;Toss the temp area
                 Ret                             ;...and return
 ReadGraph       Endp
-$Eject
+
 ;               ***********************************
 ;               *  Command Procedure - Set Color  *
 ;               ***********************************
@@ -1261,7 +1250,7 @@ SetPalAndReturn:
                 Out     Dx,Al                   ;...send to hardware
                 Ret                             ;...and return
 SetColor        Endp
-$Eject
+
 ;               ***********************************
 ;               *  Command Procedure - Write Dot  *
 ;               ***********************************
@@ -1310,7 +1299,7 @@ XorDot:
                 Mov     Es:[Si],Cl              ;Store new dot
                 Ret                             ;...and return
 WriteDot        Endp
-$Eject
+
 ;               **********************************
 ;               *  Command Procedure - Read Dot  *
 ;               **********************************
@@ -1343,7 +1332,7 @@ RdDotReturn:
                 Mov     Dot,Al                  ;Return in stack frame
                 Ret                             ;...and return
 ReadDot         Endp
-$Eject
+
 ;               ***********************************
 ;               *  Command Procedure - Write TTY  *
 ;               ***********************************
@@ -1440,7 +1429,7 @@ TTYGraphics:
                 Int     TrapVideo               ;Do scroll
                 Ret                             ;...and return
 WriteTTY        Endp
-$Eject
+
 ;               **********************
 ;               *  Local Procedures  *
 ;               **********************
@@ -1482,7 +1471,7 @@ WhichReturn:
                 Pop     Ax                      ;Restore Ax
                 Ret                             ;Return
 WhichMode       Endp
-$Eject
+
 ;               *********************************************
 ;               *  Load Crt Controller with Word Parameter  *
 ;               *         Ah = Index    Cx = Word           *
@@ -1522,7 +1511,7 @@ ConvertCursor   Proc    Near
                 Mov     Ax,CursorPosn[Bx]       ;Get and set the cursor
                 Jmp     Convert                 ;Convert xy to linear address
 ConvertCursor   Endp
-$Eject
+
 ;               ***************************
 ;               *  Convert Dot to Linear  *
 ;               * Dx = row  (1-199)       *
@@ -1571,7 +1560,7 @@ LoadCursor      Proc    Near
                 Call    Load6845Double          ;...and return
                 Ret
 LoadCursor      Endp
-$Eject
+
 ;               **********************************************
 ;               *  Fetch Crt Controller with Word Parameter  *
 ;               *          Ah = Index    Cx = Word           *

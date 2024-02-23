@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Graphic Character Generator V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Graphics
+Title 'DTC/PC BIOS Graphic Character Generator V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name Graphics
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -51,7 +47,6 @@ $Eject
 Bios            Segment Common
 
                 Assume  Cs:Bios
-$Eject
                 Org     0FA6EH
 
 VideoGraphicsPointer    Label Byte
@@ -127,7 +122,7 @@ VideoGraphicsPointer    Label Byte
                 Db      00011000B               ;...OO...
                 Db      00000000B               ;........
                 Db      00000000B               ;........
-$Eject
+
                 Db      11111111B               ;OOOOOOOO ;08H (Ctl H)
                 Db      11111111B               ;OOOOOOOO
                 Db      11100111B               ;OOO..OOO
@@ -199,7 +194,7 @@ $Eject
                 Db      00111100B               ;..OOOO..
                 Db      01011010B               ;.O.OO.O.
                 Db      10011001B               ;O..OO..O
-$Eject
+
                 Db      10000000B               ;O....... ;10H (Ctl P)
                 Db      11100000B               ;OOO.....
                 Db      11111000B               ;OOOOO... 
@@ -271,7 +266,7 @@ $Eject
                 Db      00111100B               ;..OOOO.. 
                 Db      00011000B               ;...OO...
                 Db      11111111B               ;OOOOOOOO
-$Eject
+
                 Db      00011000B               ;...OO... ;18H (Ctl X)
                 Db      00111100B               ;..OOOO..
                 Db      01111110B               ;.OOOOOO.
@@ -343,7 +338,7 @@ $Eject
                 Db      00011000B               ;...OO...
                 Db      00000000B               ;........
                 Db      00000000B               ;........
-$Eject
+
                 Db      00000000B               ;........ ;20H (Space)
                 Db      00000000B               ;........
                 Db      00000000B               ;........
@@ -415,7 +410,7 @@ $Eject
                 Db      00000000B               ;........
                 Db      00000000B               ;........
                 Db      00000000B               ;........
-$Eject
+
                 Db      00011000B               ;...OO... ;28H (()
                 Db      00110000B               ;..OO....
                 Db      01100000B               ;.OO.....
@@ -487,7 +482,7 @@ $Eject
                 Db      11000000B               ;OO......
                 Db      10000000B               ;O.......
                 Db      00000000B               ;........
-$Eject
+
                 Db      01111100B               ;.OOOOO.. ;30H (0)
                 Db      11000110B               ;OO...OO.
                 Db      11001110B               ;OO..OOO.
@@ -559,7 +554,7 @@ $Eject
                 Db      00110000B               ;..OO....
                 Db      00110000B               ;..OO....
                 Db      00000000B               ;........
-$Eject
+
                 Db      01111000B               ;.OOOO... ;38H (8)
                 Db      11001100B               ;OO..OO..
                 Db      11001100B               ;OO..OO..
@@ -631,7 +626,7 @@ $Eject
                 Db      00000000B               ;........
                 Db      00110000B               ;..OO....
                 Db      00000000B               ;........
-$Eject
+
                 Db      01111100B               ;.OOOOO.. ;40H (@)
                 Db      11000110B               ;OO...OO.
                 Db      11011110B               ;OO.OOOO.
@@ -703,7 +698,7 @@ $Eject
                 Db      01100110B               ;.OO..OO.
                 Db      00111110B               ;..OOOOO.
                 Db      00000000B               ;........
-$Eject
+
                 Db      11001100B               ;OO..OO.. ;48H (H)
                 Db      11001100B               ;OO..OO..
                 Db      11001100B               ;OO..OO..
@@ -775,7 +770,7 @@ $Eject
                 Db      01101100B               ;.OO.OO..
                 Db      00111000B               ;..OOO...
                 Db      00000000B               ;........
-$Eject
+
                 Db      11111100B               ;OOOOOO.. ;50H (P)
                 Db      01100110B               ;.OO..OO.
                 Db      01100110B               ;.OO..OO.
@@ -847,7 +842,7 @@ $Eject
                 Db      11101110B               ;OOO.OOO.
                 Db      11000110B               ;OO...OO.
                 Db      00000000B               ;........
-$Eject
+
                 Db      11000110B               ;OO...OO. ;58H (X)
                 Db      11000110B               ;OO...OO.
                 Db      01101100B               ;.OO.OO..
@@ -919,7 +914,7 @@ $Eject
                 Db      00000000B               ;........
                 Db      00000000B               ;........
                 Db      11111111B               ;OOOOOOOO
-$Eject
+
                 Db      00110000B               ;..OO.... ;60H (`)
                 Db      00110000B               ;..OO....
                 Db      00011000B               ;...OO...
@@ -991,7 +986,7 @@ $Eject
                 Db      01111100B               ;.OOOOO..
                 Db      00001100B               ;....OO..
                 Db      11111000B               ;OOOOO...
-$Eject
+
                 Db      11100000B               ;OOO..... ;68H (h)
                 Db      01100000B               ;.OO.....
                 Db      01101100B               ;.OO.OO..

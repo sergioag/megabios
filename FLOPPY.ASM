@@ -1,6 +1,4 @@
-$Title ('DTC/PC BIOS Floppy Disk Driver V1.0')
-$Pagelength (80) Pagewidth (132) Debug Nogen
-Name Floppy
+Title 'DTC/PC BIOS Floppy Disk Driver V1.0'
 
 
 ;    Author:      Don K. Harrison
@@ -22,7 +20,6 @@ Name Floppy
 ;            (c) Display Telecommunications Corporation, 1983
 ;                      All Rights Reserved
 
-$Eject
 
 
 ;               **********************
@@ -35,7 +32,6 @@ $Eject
 
 
 
-$Eject
 
 ;               ********************
 ;               *  Public Symbols  *
@@ -114,8 +110,7 @@ FDCSpecifyCMD   Equ     00000011B               ;Specify command (timers)
 FDCSenseIntCMD  Equ     00001000B               ;Sense interrupt command
 FDCSeekCMD      Equ     00001111B               ;Seek command
 
-$Include (IbmInc)
-$Eject
+Include IBMINC
 
 ;               *******************
 ;               *  Data Segments  *
@@ -132,7 +127,6 @@ BiosDataArea    Segment Public
                 Extrn FDCStatus:Byte, DisketteStat:Byte, SeekStatus:Byte
                 Extrn MotorStatus:Byte, MotorCount:Byte
 BiosDataArea    Ends
-$Eject
 ;               **************************************
 ;               *  Stack Frame After Initialization  *
 ;               **************************************
@@ -163,7 +157,6 @@ $Eject
 ;         -------------------------------
 ;        |   Command    |  # of Sectors  |<- BP
 ;         -------------------------------
-$Eject
 ;               ******************
 ;               *  Code Segment  *
 ;               ******************
@@ -238,7 +231,6 @@ FloppyDriver    Proc    Far
                 Pop     Bp                      ;...Bp
                 Ret     2                       ;Return without restoring flags
 FloppyDriver    Endp
-$Eject
 ;               ***********************************
 ;               *  Command Parser and Dispatcher  *
 ;               ***********************************
@@ -271,7 +263,6 @@ StatusCommand   Proc    Near
 StatusCommand   Endp
 
 
-$Eject
 ;               ***********************************************************
 ;               *                  Reset Command Handler                  *
 ;               *  Returns are via ResetReturn or error conditions in     *
@@ -325,7 +316,6 @@ ResetContinue:
 ResetReturn:
                 Ret                             ;Return, FDC will not respond
 ResetCommand    Endp
-$Eject
 ;               ***********************************************************
 ;               *  Diskette I/O Commands (Read / Write / Verify / Format  *
 ;               *  Returns are via ErrorReturn, ErrorRtnNum, OperationOk  *
@@ -372,9 +362,7 @@ OurError        Db      SectNotFndStat          ;Sector not found
                 Db      BadFDCStat              ;None of the above (??)
 
 TableStruc      Ends
-$Nolist
 Table           TableStruc<>                    ;MISSING LINE
-$List
 
 DiskIO          Proc    Near
                 Cli                             ;Clear ints during I/O and
