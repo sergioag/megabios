@@ -148,7 +148,7 @@ VideoSegment    Equ     Word Ptr [Bp+0]         ;Video segment
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
                 Extrn   VideoGraphicsPointer:Byte, Beep:Near
                 Assume  Cs:Bios, Ds:BiosDataArea, Es:Nothing
                 Org     0F045H

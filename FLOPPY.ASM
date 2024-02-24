@@ -161,7 +161,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
                 Assume  Cs:Bios, Ds:BiosDataArea, SS:BiosStack
                 Org     0EC59H                  ;Align with PC / XT
 

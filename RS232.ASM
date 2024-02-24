@@ -63,7 +63,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Assume  Cs:Bios,Ds:BiosDataArea
 

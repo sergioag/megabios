@@ -113,7 +113,7 @@ ColorSeg        Ends
 ;               *  Initialization Code Entry Point  *
 ;               *************************************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Extrn PrintScreenInt:Near, NMIInt:Near, IllegalInt:Near
                 Extrn WordOut:Near, ByteOut:Near, KeyIn:Near

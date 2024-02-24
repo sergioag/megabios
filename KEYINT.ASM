@@ -258,7 +258,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 ByteType        Label   Byte            ;Used for xlat instruction typing
 
                 Extrn ResetEntry:Far

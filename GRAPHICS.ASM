@@ -44,7 +44,7 @@ Title 'DTC/PC BIOS Graphic Character Generator V1.0'
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Assume  Cs:Bios
                 Org     0FA6EH

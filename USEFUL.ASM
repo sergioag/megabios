@@ -72,7 +72,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Extrn   NMIInt:Near
                 Assume  Cs:Bios, Ds:BiosDataArea

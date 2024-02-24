@@ -111,7 +111,7 @@ BiosDataArea    Ends
 ;               *  ROM Based Segment  *
 ;               ***********************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Extrn WordOut:Near, CharOut:Near, NibbleOut:Near, KeyIn:Near
                 Extrn PrintMessage:Near, Beep:Near, TimerHdwrInt:Far

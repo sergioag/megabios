@@ -73,7 +73,7 @@ BasicSeg        Ends
 ;               ******************
 
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Extrn FloppyParamsPointer:DWord, ClearScreen:Near
                 Extrn PrintMessage:Near, KeyIn:Near

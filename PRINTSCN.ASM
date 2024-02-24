@@ -62,7 +62,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment BYTE
+Bios            Segment Byte Common 'CODE'
 
                 Org     0FF54H                  ;Align with Pc and Xt
 
