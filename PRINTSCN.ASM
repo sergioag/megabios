@@ -54,7 +54,7 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn PrintScnStatus:Byte
 BiosDataArea    Ends
 
@@ -62,7 +62,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Org     0FF54H                  ;Align with Pc and Xt
 

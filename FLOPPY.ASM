@@ -116,14 +116,14 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-IntSegment      Segment Public
+IntSegment      Segment At 0
                 Extrn FloppyParamsTrapAddr:Dword
 IntSegment      Ends
 
-BiosStack       Segment Public
+BiosStack       Segment At 30H
 BiosStack       Ends
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn FDCStatus:Byte, DisketteStat:Byte, SeekStatus:Byte
                 Extrn MotorStatus:Byte, MotorCount:Byte
 BiosDataArea    Ends
@@ -161,7 +161,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
                 Assume  Cs:Bios, Ds:BiosDataArea, SS:BiosStack
                 Org     0EC59H                  ;Align with PC / XT
 

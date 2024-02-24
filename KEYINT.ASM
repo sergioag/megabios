@@ -246,7 +246,7 @@ ControlZ        Equ     1AH                     ;Ascii code for control Z
 ;               *  Data Segments  *
 ;               *******************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn KeyboardFlag1:Byte, KeyboardFlag2:Byte
                 Extrn AltInput:Byte, KeyBufHead:Word, KeyBufTail:Word
                 Extrn KeyBuffer:Byte, ResetFlag:Word, BufferStart:Word
@@ -258,7 +258,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 ByteType        Label   Byte            ;Used for xlat instruction typing
 
                 Extrn ResetEntry:Far

@@ -53,7 +53,7 @@ Include IBMINC
 ;               *******************
 
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn TimerLow:Word, TimerHigh:Word,TimerOverflow:Byte
                 Extrn MotorStatus:Byte, MotorCount:Byte
 BiosDataArea    Ends
@@ -62,7 +62,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Assume  Cs:Bios, Ds:BiosDataArea
 

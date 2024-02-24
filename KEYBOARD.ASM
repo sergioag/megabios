@@ -45,7 +45,7 @@ Title 'DTC/PC BIOS Keyboard Interface V1.0'
 ;               *  Data Segments  *
 ;               *******************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn KeyboardFlag1:Byte
                 Extrn KeyBufHead:Word, KeyBufTail:Word
                 Extrn BufferStart:Word, BufferEnd:Word
@@ -55,7 +55,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Assume  Cs:Bios, Ds:BiosDataArea
 

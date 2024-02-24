@@ -51,11 +51,11 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-IntSegment      Segment Public
+IntSegment      Segment At 0
 
 IntSegment      Ends
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn RS232Base:Word, RS232TimeOut:Byte
 BiosDataArea    Ends
 
@@ -63,7 +63,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Assume  Cs:Bios,Ds:BiosDataArea
 

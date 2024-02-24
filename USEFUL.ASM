@@ -64,7 +64,7 @@ Include IBMINC
 ;               *******************
 
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn EquipFlag:Word
 BiosDataArea    Ends
 
@@ -72,7 +72,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Extrn   NMIInt:Near
                 Assume  Cs:Bios, Ds:BiosDataArea

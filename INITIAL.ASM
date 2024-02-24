@@ -59,7 +59,7 @@ Include IBMINC
 ;               *******************
 
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn MemorySize:Word, ResetFlag:Word, EquipFlag:Word
                 Extrn KeyBuffer:Byte, KeyBufHead:Word, KeyBufTail:Word
                 Extrn BufferStart:Word, BufferEnd:Word
@@ -73,61 +73,38 @@ BiosDataArea    Segment Public
 
 BiosDataArea    Ends
 
-BiosStack       Segment Public
+BiosStack       Segment At 30H
                 Extrn StackTop:Word
 BiosStack       Ends
 
-HiStack Segment
+HiStack Segment At 40H
 HiStack Ends
 
-IntSegment      Segment Public
+IntSegment      Segment At 0
                 Extrn RAMVectors:DWord, ROMVectors:DWord, VideoTrapAddr:DWord
                 Extrn BasicTrapAddr:DWord, NMITrapAddr:DWord
                 Extrn VideoGraphicsTrapAddr:DWord, PrintScreenTrapAddr:Dword
 IntSegment      Ends
 
-BasicSeg        Segment Common
+BasicSeg        Segment At 0F600H
                 Assume Cs:BasicSeg
                 Org     0
 Basic           Label Far
 BasicSeg        Ends
 
-IOROMSeg        Segment Common
+IOROMSeg        Segment At 0C000H
 IOROMSeg        Ends
 
-FlasherSegment  Segment
+FlasherSegment  Segment At 0
 DsZero          Label   Byte
 FlasherSegment  Ends
 
-MonoSeg         Segment Public
+MonoSeg         Segment At 0B000H
 MonoSeg         Ends
 
-ColorSeg        Segment Public
+ColorSeg        Segment At 0B800H
 ColorSeg        Ends
 
-
-;               ******************************
-;               *  Segment for ROM Checksum  *
-;               ******************************
-RomChecksum     Segment byte
-
-                Db      0                       ; Will be calculated during build
-
-RomChecksum     Ends
-
-;               ******************************
-;               *  Segment at End of Memory  *
-;               ******************************
-
-ReleaseDate     Segment byte
-
-;               **********************
-;               *  Release Date Code *
-;               **********************
-
-                Db      '12/23/83DKH'
-
-ReleaseDate     Ends
 
 ;               ******************
 ;               *  Code Segment  *
@@ -136,7 +113,7 @@ ReleaseDate     Ends
 ;               *  Initialization Code Entry Point  *
 ;               *************************************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Extrn PrintScreenInt:Near, NMIInt:Near, IllegalInt:Near
                 Extrn WordOut:Near, ByteOut:Near, KeyIn:Near
@@ -163,6 +140,17 @@ PossiblePtrs:
                 Dw      3BCH                    ;Printer on mono card
                 Dw      378H                    ;Parallel printer card (pri.)
                 Dw      278H                    ;Parallel printer card (sec.)
+
+                Org     0FFF0H
+                Db      0                       ;Checksum byte
+
+                Org     0FFF5H
+;               **********************
+;               *  Release Date Code *
+;               **********************
+
+                Db      '12/23/83DKH'
+
 
                 Org     0E05BH                  ;Align with PC and XT
 
@@ -316,7 +304,7 @@ DmaErr:
 ELSE
                 ;       Bypass DMA refresh test
                 Mov     Bp,0                    ;Clear error flag
-                01CH DUP (NOP)
+                DB      01CH DUP (90H)          ;Fill with NOPs
 ENDIF
 
                 ;       Initialize Real Time Clock (Channel 0 of 8253)

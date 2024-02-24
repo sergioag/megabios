@@ -54,7 +54,7 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn MemorySize:Word, EquipFlag:Word
 BiosDataArea    Ends
 
@@ -62,7 +62,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Assume  Cs:Bios, Ds:BiosDataArea
 

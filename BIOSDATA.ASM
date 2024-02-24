@@ -52,7 +52,7 @@ Title 'DTC/PC BIOS Public Data Definitions V1.0'
 ;               *  Bios Data Segment  *
 ;               ***********************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
 RS232Base       Label   Word
 RS2321Addr      Dw      1 Dup(?)                ;Active RS232 Card 1
 RS2322Addr      Dw      1 Dup(?)                ;Active RS232 Card 2

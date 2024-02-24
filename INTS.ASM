@@ -52,7 +52,7 @@ Include IBMINC
 ;               *  Ram Based Interrupt Vectors  *
 ;               *********************************
 
-IntSegment      Segment Public
+IntSegment      Segment At 0
 
 RamVectors              Label   DWord
 ZeroDivisionTrapAddr    Dd      1 Dup (?)       ;Divide by zero vector
@@ -103,7 +103,7 @@ IntSegment      Ends
 ;               *  Public Variables  *
 ;               **********************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn MemorySize:Word, IntrFlag:Byte
 BiosDataArea    Ends
 
@@ -111,7 +111,7 @@ BiosDataArea    Ends
 ;               *  ROM Based Segment  *
 ;               ***********************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Extrn WordOut:Near, CharOut:Near, NibbleOut:Near, KeyIn:Near
                 Extrn PrintMessage:Near, Beep:Near, TimerHdwrInt:Far

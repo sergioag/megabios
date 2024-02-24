@@ -41,7 +41,7 @@ Title 'DTC/PC BIOS Stack V1.0'
 ;               *  Stack Segment  *
 ;               *******************
 
-BiosStack       Segment Public
+BiosStack       Segment At 30H
                 Dw      128 Dup (?)             ;128 Level Temporary Stack
 StackTop        Label   Word
 BiosStack       Ends

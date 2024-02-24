@@ -56,21 +56,21 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-IntSegment      Segment Public
+IntSegment      Segment At 0
                 Extrn   VidParamsTrapAddr:DWord, VideoGraphicsTrapAddr:DWord
 IntSegment      Ends
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn CrtMode:Byte, CrtColumns:Word, CrtLength:Word
                 Extrn CrtStart:Word, CursorPosn:Word, CursorMode:Word
                 Extrn ActivePage:Byte, ActiveCard:Word, CrtModeSet:Byte
                 Extrn CrtPalette:Byte, EquipFlag:Word
 BiosDataArea    Ends
 
-MonoSeg         Segment Public
+MonoSeg         Segment At 0B000H
 MonoSeg         Ends
 
-ColorSeg        Segment Public
+ColorSeg        Segment At 0B800H
 ColorSeg        Ends
 
 
@@ -148,7 +148,7 @@ VideoSegment    Equ     Word Ptr [Bp+0]         ;Video segment
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
                 Extrn   VideoGraphicsPointer:Byte, Beep:Near
                 Assume  Cs:Bios, Ds:BiosDataArea, Es:Nothing
                 Org     0F045H

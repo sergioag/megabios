@@ -52,7 +52,7 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-BiosDataArea    Segment Public
+BiosDataArea    Segment At 40H
                 Extrn PrintTimeOut:Byte, PrinterBase:Word
 BiosDataArea    Ends
 
@@ -60,7 +60,7 @@ BiosDataArea    Ends
 ;               *  Code Segment  *
 ;               ******************
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Assume  Cs:Bios, Ds:BiosDataArea
 

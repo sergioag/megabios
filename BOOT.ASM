@@ -52,7 +52,7 @@ Include IBMINC
 ;               *  Data Segments  *
 ;               *******************
 
-IntSegment      Segment Public
+IntSegment      Segment At 0
                 Extrn FloppyParamsTrapAddr:DWord, BasicTrapAddr:DWord
 
 IntSegment      Ends
@@ -62,7 +62,7 @@ BootSegment     Segment at 0
 BootLocn        Label Far
 BootSegment     Ends
 
-BasicSeg        Segment Common
+BasicSeg        Segment At 0F600H
                 Assume Cs:BasicSeg
                 Org     0
 Basic           Label Far
@@ -73,7 +73,7 @@ BasicSeg        Ends
 ;               ******************
 
 
-Bios            Segment Common
+Bios            Segment BYTE
 
                 Extrn FloppyParamsPointer:DWord, ClearScreen:Near
                 Extrn PrintMessage:Near, KeyIn:Near
