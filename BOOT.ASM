@@ -63,7 +63,7 @@ BootLocn        Label Far
 BootSegment     Ends
 
 BasicSeg        Segment At 0F600H
-                Assume Cs:BasicSeg
+                ;Assume Cs:BasicSeg
                 Org     0
 Basic           Label Far
 BasicSeg        Ends

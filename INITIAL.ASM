@@ -66,7 +66,7 @@ BiosDataArea    Segment At 40H
                 Extrn PrintTimeOut:Word, RS232TimeOut:Word
                 Extrn PrinterBase:Word, RS232Base:Word
                 Extrn IOROMInit:Word, IOROMSegment:Word
-                Extrn MfgErrFlag:Byte, PositionCursor:Near, ClearScreen:Near
+                Extrn MfgErrFlag:Byte
                 Extrn CrtMode:Byte, CrtColumns:Word
                 Extrn CrtModeSet:Byte, ActiveCard:Word
 
@@ -87,7 +87,7 @@ IntSegment      Segment At 0
 IntSegment      Ends
 
 BasicSeg        Segment At 0F600H
-                Assume Cs:BasicSeg
+                ;Assume Cs:BasicSeg
                 Org     0
 Basic           Label Far
 BasicSeg        Ends
@@ -121,6 +121,7 @@ Bios            Segment Byte Common 'CODE'
                 Extrn MemoryTest:Near, RomCheckCx:Near
                 Extrn ROMCheck8K:Near, VideoInit:Near
                 Extrn CrtCrlf:Near
+                Extrn PositionCursor:Near, ClearScreen:Near
 
                 Org     0E000H                  ;Begin BIOS
 StartOfBios     Label   Byte
@@ -143,6 +144,7 @@ PossiblePtrs:
 
                 Org     0FFF0H
                 Db      0                       ;Checksum byte
+
 
                 Org     0FFF5H
 ;               **********************
