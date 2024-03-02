@@ -24,12 +24,11 @@ More information about DTC, MEGA-BIOS and it's legacy can be found [here](https:
 
 **Prerequisites:**
 
-1. A PC running real mode DOS, or emulator: [MartyPC](https://github.com/dbalsom/martypc), [VirtualXT](https://virtualxt.org/) or [86Box](https://86box.net/) are suggested. Note: since the `LINK86`/`LOC86` command line requires STDIN redirection, DOSBox will not work.
-2. Intel ASM86 Macro Assembler complete tools: `ASM86.EXE`, `DXC.EXE`, `LINK86.EXE`, `LOC86.EXE` and `OH86.EXE` ([here](https://www.os2museum.com/wp/the-ibm-pc-bios-and-intel-isis-ii/) or [here](https://winworldpc.com/product/intel-asm86-macro-assembler/31)).
+1. PC running [MASM32 toolkit](https://masm32.com/)
 
 **Steps:**
 
-1. Make sure ASM86 directory is in your `PATH` environment variable (ex: `PATH=C:\ASM86` or wherever it is located).
+1. Make sure MASM32 directory is in your `PATH` environment variable (ex: `PATH=C:\MASM32\BIN` or wherever it is located).
 2. Run `BUILD.BAT` in a DOS environment, which will produce `MEGABIOS.ROM`, a binary ROM file 8192 bytes long.
 
 ### Known Issues
