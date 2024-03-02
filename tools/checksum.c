@@ -1,4 +1,4 @@
-/* Checksum utility for Mega-Bios
+/* Checksum and relocation utility for Mega-Bios
    Copyright (c) 2024, Sergio Aguayo
 
   Redistribution and use in source and binary forms, with or without
@@ -36,8 +36,40 @@ because of the simplicity.
 #include <stdio.h>
 #include <stdlib.h>
 
+#pragma pack(push, 1)
+struct MZExe {
+	unsigned short signature; /* == 0x5a4D */
+	unsigned short bytes_in_last_block;
+	unsigned short blocks_in_file;
+	unsigned short num_relocs;
+	unsigned short header_paragraphs;
+	unsigned short min_extra_paragraphs;
+	unsigned short max_extra_paragraphs;
+	unsigned short ss;
+	unsigned short sp;
+	unsigned short checksum;
+	unsigned short ip;
+	unsigned short cs;
+	unsigned short reloc_table_offset;
+	unsigned short overlay_number;
+};
+struct EXE_RELOC {
+  unsigned short offset;
+  unsigned short segment;
+};
+#pragma pack(pop, 1)
+
 #define FILE_SIZE	8192
+#define RELOC_SEGMENT	0xF000
 #define CHECKSUM_OFFSET	0x1FE0
+
+long getFileSize(FILE *fh) {
+	long curPos = ftell(fh);
+	fseek(fh, 0, SEEK_END);
+	long size = ftell(fh);
+	fseek(fh, curPos, SEEK_SET);
+	return size;
+}
 
 unsigned char calculateChecksum(unsigned char *data) {
 	unsigned char checksum = 0;
@@ -52,7 +84,12 @@ unsigned char calculateChecksum(unsigned char *data) {
 
 int main(int argc, char* argv[]) {
 	FILE *inFile = NULL, *outFile = NULL;
+	struct MZExe exeHdr;
+	struct EXE_RELOC *relocs = NULL;
+	long codeOffset;
+	long fileSize;
 	unsigned char *fileData = NULL;
+
 	if(argc != 3) {
 		printf("Usage: %s inputFile outputFile\n", argv[0]);
 		goto _errorExit;
@@ -68,18 +105,62 @@ int main(int argc, char* argv[]) {
 		printf("Cannot open output file: %s\n", argv[2]);
 		goto _errorExit;
 	}
-	fileData = malloc(FILE_SIZE);
+
+	if(fread(&exeHdr, sizeof(struct MZExe), 1, inFile) != 1) {
+		printf("Cannot read EXE file header: %s\n", argv[1]);
+		goto _errorExit;
+	}
+
+	if(exeHdr.signature != 0x5A4D) {
+		printf("Invalid MZ EXE signature.\n");
+		goto _errorExit;
+	}
+
+	relocs = malloc(exeHdr.num_relocs*sizeof(struct EXE_RELOC));
+	if(relocs == NULL) {
+		printf("Cannot allocate memory for relocation info.\n");
+		goto _errorExit;
+	}
+
+	if(fseek(inFile, exeHdr.reloc_table_offset, SEEK_SET)) {
+		printf("Error seeking for relocation table.\n");
+		goto _errorExit;
+	}
+
+	if(fread(relocs, sizeof(struct EXE_RELOC), exeHdr.num_relocs, inFile) != exeHdr.num_relocs) {
+		printf("Error reading relocations.\n");
+		goto _errorExit;
+	}
+
+	codeOffset = exeHdr.header_paragraphs << 4;
+	fileSize = getFileSize(inFile) - codeOffset;
+
+	fileData = malloc(fileSize);
 	if(fileData == NULL) {
 		printf("Cannot allocate memory to read file.\n");
 		goto _errorExit;
 	}
-	if(fread(fileData, FILE_SIZE, 1, inFile) != 1) {
+
+	if(fseek(inFile, codeOffset, SEEK_SET)) {
+		printf("Error seeking for code\n");
+		goto _errorExit;
+	}
+
+	if(fread(fileData, fileSize, 1, inFile) != 1) {
 		printf("Couldn't read input file.\n");
 		goto _errorExit;
 	}
-	fileData[CHECKSUM_OFFSET] = 0;		// Should be zero from build, but just in case...
-	fileData[CHECKSUM_OFFSET] = calculateChecksum(fileData);
-	if(fwrite(fileData, FILE_SIZE, 1, outFile) != 1) {
+
+	for(int i = 0; i < exeHdr.num_relocs; i++) {
+		struct EXE_RELOC *reloc = &relocs[i];
+		unsigned int offset = ((unsigned int)reloc->segment << 4) + reloc->offset;
+		unsigned short *target = (unsigned short *)&fileData[offset];
+		*target += RELOC_SEGMENT;
+	}
+
+	fileData[fileSize-FILE_SIZE+CHECKSUM_OFFSET] = 0;		// Should be zero from build, but just in case...
+	fileData[fileSize-FILE_SIZE+CHECKSUM_OFFSET] = calculateChecksum(&fileData[fileSize-FILE_SIZE]);
+	if(fwrite(&fileData[fileSize-FILE_SIZE], FILE_SIZE, 1, outFile) != 1) {
 		printf("Couldn't write output file.\n");
 		goto _errorExit;
 	}
@@ -87,7 +168,13 @@ int main(int argc, char* argv[]) {
 	fclose(inFile);
 	fclose(outFile);
 	return 0;
+
 _errorExit:
+	if(relocs != NULL) {
+		free(relocs);
+		relocs = NULL;
+	}
+
 	if(fileData != NULL) {
 		free(fileData);
 		fileData = NULL;
