@@ -36,7 +36,7 @@ because of the simplicity.
 #include <stdio.h>
 #include <stdlib.h>
 
-#pragma pack(push, 1)
+//#pragma pack(push, 1)
 struct MZExe {
 	unsigned short signature; /* == 0x5a4D */
 	unsigned short bytes_in_last_block;
@@ -57,23 +57,25 @@ struct EXE_RELOC {
   unsigned short offset;
   unsigned short segment;
 };
-#pragma pack(pop, 1)
+//#pragma pack(pop, 1)
 
 #define FILE_SIZE	8192
 #define RELOC_SEGMENT	0xF000
 #define CHECKSUM_OFFSET	0x1FE0
 
 long getFileSize(FILE *fh) {
-	long curPos = ftell(fh);
+	long curPos, size;
+   curPos = ftell(fh);
 	fseek(fh, 0, SEEK_END);
-	long size = ftell(fh);
+	size = ftell(fh);
 	fseek(fh, curPos, SEEK_SET);
 	return size;
 }
 
 unsigned char calculateChecksum(unsigned char *data) {
 	unsigned char checksum = 0;
-	for(int i = 0; i < FILE_SIZE; i++) {
+   int i;
+	for(i = 0; i < FILE_SIZE; i++) {
 		checksum += data[i];
 	}
 	printf("Sum = %02X\n", checksum);
@@ -89,6 +91,8 @@ int main(int argc, char* argv[]) {
 	long codeOffset;
 	long fileSize;
 	unsigned char *fileData = NULL;
+   long skipCode;
+   int i;
 
 	if(argc != 3) {
 		printf("Usage: %s inputFile outputFile\n", argv[0]);
@@ -132,35 +136,43 @@ int main(int argc, char* argv[]) {
 		goto _errorExit;
 	}
 
+
 	codeOffset = exeHdr.header_paragraphs << 4;
 	fileSize = getFileSize(inFile) - codeOffset;
+   skipCode = fileSize - FILE_SIZE;
 
-	fileData = malloc(fileSize);
+	fileData = malloc(skipCode);
 	if(fileData == NULL) {
 		printf("Cannot allocate memory to read file.\n");
 		goto _errorExit;
 	}
 
-	if(fseek(inFile, codeOffset, SEEK_SET)) {
+	if(fseek(inFile, codeOffset+skipCode, SEEK_SET)) {
 		printf("Error seeking for code\n");
 		goto _errorExit;
 	}
 
-	if(fread(fileData, fileSize, 1, inFile) != 1) {
+	if(fread(fileData, FILE_SIZE, 1, inFile) != 1) {
 		printf("Couldn't read input file.\n");
 		goto _errorExit;
 	}
 
-	for(int i = 0; i < exeHdr.num_relocs; i++) {
+	for(i = 0; i < exeHdr.num_relocs; i++) {
+      unsigned short *target;
 		struct EXE_RELOC *reloc = &relocs[i];
 		unsigned int offset = ((unsigned int)reloc->segment << 4) + reloc->offset;
-		unsigned short *target = (unsigned short *)&fileData[offset];
+      if(offset < skipCode) {
+      	printf("Relocation outside of last 8K boundary. Please check.\n");
+         goto _errorExit;
+      }
+      offset -= skipCode;
+		target = (unsigned short *)&fileData[offset];
 		*target += RELOC_SEGMENT;
 	}
 
-	fileData[fileSize-FILE_SIZE+CHECKSUM_OFFSET] = 0;		// Should be zero from build, but just in case...
-	fileData[fileSize-FILE_SIZE+CHECKSUM_OFFSET] = calculateChecksum(&fileData[fileSize-FILE_SIZE]);
-	if(fwrite(&fileData[fileSize-FILE_SIZE], FILE_SIZE, 1, outFile) != 1) {
+	fileData[CHECKSUM_OFFSET] = 0;		// Should be zero from build, but just in case...
+	fileData[CHECKSUM_OFFSET] = calculateChecksum(fileData);
+	if(fwrite(fileData, FILE_SIZE, 1, outFile) != 1) {
 		printf("Couldn't write output file.\n");
 		goto _errorExit;
 	}
