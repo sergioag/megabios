@@ -65,7 +65,7 @@ BootSegment     Ends
 BasicSeg        Segment At 0F600H
                 ;Assume Cs:BasicSeg
                 Org     0
-Basic           Label Far
+BasicAddr       Label Far
 BasicSeg        Ends
 
 ;               ******************
@@ -113,9 +113,9 @@ RetryLoop:
                 Mov     Ch,0                    ;Cl = sector 1, Ch = track 0
                 Int     TrapFDDriver            ;Execute disk I/O software
                 Jc      BootFailed              ;Jump and retry if error
-                Assume  Cs:BootSegment          ;Assume causes Jmp instr. to
+                ;Assume  Cs:BootSegment         ;Assume causes Jmp instr. to
                 Jmp     BootLocn                ;...reference BootSegment
-                Assume  Cs:Bios                 ;Back to Bios
+                ;Assume  Cs:Bios                ;Back to Bios
 BootFailed:
                 Pop     Ax                      ;Restore count
                 Dec     Al                      ;...and reduce it by 1
@@ -142,12 +142,12 @@ TryBasic:
                 Mov     Ds,Ax                   ;...to check
                 Les     Ax,BasicTrapAddr        ;...if basic available
                 Mov     Bx,Es                   ;...for booting
-                Cmp     Ax,Offset Basic         ;Check offset
+                Cmp     Ax,Offset BasicAddr     ;Check offset
                 Mov     Ax,0                    ;Clear flag incase failure
                 Jne     WhatGives               ;...jump if not basic
                 Cmp     Bx,BasicSeg             ;Check segment
                 Jne     WhatGives               ;...jump if not basic
-                Jmp     Basic                   ;...else startup basic
+                Jmp     BasicAddr               ;...else startup basic
 
 LoadDiskMsg     Db      'Insert diskette in DRIVE A.',AsciiCarriage
                 Db      AsciiLineFeed,'    Press any key.',0

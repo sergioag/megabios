@@ -91,7 +91,7 @@ PrinterDriver   Proc    Far
 
                 ;       If illegal command, just return
 
-PrinterReturn:
+PrinterReturn::
                 Pop     Dx                      ;Restore registers we
                 Pop     Cx                      ;...used
                 Pop     Bx                      ;...and
@@ -129,7 +129,7 @@ StrobeChar:
 
                 ;       This is an entry point from PrinterInitialize
 
-StatusReturn3:
+StatusReturn3::
                 Mov     Al,00001100B            ;Strobe = low
                 Out     Dx,Al                   ;...to printer
                 Dec     Dx                      ;Point back at status
@@ -143,10 +143,10 @@ PrintChar       Endp
 PrintStatus     Proc    Near
                 Mov     Ah,Al                   ;Preserve Al
                 Inc     Dx                      ;Increment to status port
-StatusReturn1:
+StatusReturn1::
                 In      Al,Dx                   ;...and get status
                 And     Al,011111000B           ;...turn off unused bits
-StatusReturn2:
+StatusReturn2::
                 Xor     Al,01001000B            ;...and flip sense of some
                 Xchg    Al,Ah                   ;...Al=char, Ah=status
                 Jmp     PrinterReturn           ;...jump and return status

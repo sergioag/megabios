@@ -687,10 +687,10 @@ FloppyHdwrInt   Endp
 ;               ***************************
 
 ResultProc      Proc    Near
-ProbeInterrupt:
+ProbeInterrupt::
                 Mov     Al,FDCSenseIntCMD       ;Send command to sense int
                 Call    FDCOut                  ;...to FDC
-GetStatus:
+GetStatus::
                 Push    Bx                      ;Save Bx
                 Push    Cx                      ;...and Cx
                 Mov     Cx,7                    ;Get 7 bytes max from FDC

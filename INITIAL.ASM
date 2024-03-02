@@ -77,7 +77,7 @@ BiosStack       Segment At 30H
                 Extrn StackTop:Word
 BiosStack       Ends
 
-HiStack Segment At 40H
+HiStack Segment At 80H
 HiStack Ends
 
 IntSegment      Segment At 0
@@ -89,7 +89,7 @@ IntSegment      Ends
 BasicSeg        Segment At 0F600H
                 ;Assume Cs:BasicSeg
                 Org     0
-Basic           Label Far
+BasicAddr       Label Far
 BasicSeg        Ends
 
 IOROMSeg        Segment At 0C000H
@@ -142,15 +142,19 @@ PossiblePtrs:
                 Dw      378H                    ;Parallel printer card (pri.)
                 Dw      278H                    ;Parallel printer card (sec.)
 
-                Org     0FFF0H
+                Org     0FFE0H
                 Db      0                       ;Checksum byte
 
+;               *************************
+;               *  CPU Power-on vector  *
+;               *************************
+                Org     0FFF0H
+				Jmp     Far Ptr POREntry
 
-                Org     0FFF5H
 ;               **********************
 ;               *  Release Date Code *
 ;               **********************
-
+                Org     0FFF5H
                 Db      '12/23/83DKH'
 
 
@@ -439,7 +443,7 @@ VectorLoop:
 
                 Mov     Ax,BasicSeg             ;Point
                 Mov     Ds,Ax                   ;...at Basic
-                Mov     Bx,Offset Basic         ;Offset of basic in our segment
+                Mov     Bx,Offset BasicAddr     ;Offset of basic in our segment
                 Mov     Ah,4                    ;...there are 4 8k segments
 BasicCkLoop:
                 Call    ROMCheck8K              ;Check one
@@ -449,7 +453,7 @@ BasicCkLoop:
                 Pop     Ds                      ;Restore data segment register
                 Assume  Ds:BiosDataArea         ;...and inform ASM86
                 Mov     Di,Offset BasicTrapAddr ;Point at basic trap address
-                Mov     Ax,Offset Basic         ;Offset = 0
+                Mov     Ax,Offset BasicAddr     ;Offset = 0
                 Stosw                           ;...store it
                 Mov     Ax,BasicSeg             ;Segment = F600
                 Stosw                           ;...store it

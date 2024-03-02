@@ -263,7 +263,7 @@ PositionCursor  Endp
 
 ROMCheck8K      Proc    Near
                 Mov     Cx,8192                 ;Length of ROM = 8k
-ROMCheckCx:
+ROMCheckCx::
                 Mov     Al,0                    ;Zero the checksum
 ROMCheckLoop:
                 Add     Al,DS:[Bx]              ;Bx holds the offset
