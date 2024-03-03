@@ -122,7 +122,7 @@ PrintInnerLoop:
                 Or      Al,1                    ;...set timeout error
                 And     Al,11111001B            ;...mask unused bits
                 Jmp     StatusReturn2           ;...and return status
-				Nop                             ;TODO: Padding for MASM
+                Nop                             ;TODO: Padding for MASM
 StrobeChar:
                 Inc     Dx                      ;Point at command port
                 Mov     Al,00001101B            ;Strobe = high

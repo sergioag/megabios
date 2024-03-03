@@ -306,7 +306,7 @@ MotorZeroBit:
 
                 Mov     DisketteStat,BadFDCStat ;...if not, FDC may be bad
                 Jmp     ResetReturn             ;...jump and error out
-				Nop                             ;TODO: Padding for MASM
+                Nop                             ;TODO: Padding for MASM
 ResetContinue:
                 Mov     Al,FDCSpecifyCmd        ;Specify timer settings
                 Call    FDCOut                  ;...to FDC
@@ -531,7 +531,7 @@ MSTimerDone:
                 Mov     Al,FormatFiller         ;FDC "D" parameter
                 Call    FDCOut                  ;...send it out
                 Jmp     CommandLoaded           ;Continue below
-				Nop                             ;TODO: Padding for MASM
+                Nop                             ;TODO: Padding for MASM
 
                 ;       Load parameters for read / write / verify
 
@@ -559,7 +559,7 @@ CommandLoaded:
                 Je      Translate               ;...jump if yes
                 Mov     DisketteStat,BadFDCStat ;...else error return
                 Jmp     ErrorRtnNum             ;...actual transferred
-				Nop                             ;TODO: Padding for MASM
+                Nop                             ;TODO: Padding for MASM
 
                 ;       Translate FDC error to our error
 Translate:

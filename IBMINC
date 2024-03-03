@@ -118,7 +118,7 @@ IF Model Eq 0                           ;IBM 5150
 PPIBStartUpMode Equ     10101101B       ;PPIBSpkrGate +
                                         ;...PPIBSpare +
                                         ;...PPIBDisIOParity +
-										;...Cassette Off +
+                                        ;...Cassette Off +
                                         ;...PPIBClearKbyd
 
 ELSE                                    ;Everyone else
