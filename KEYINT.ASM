@@ -435,6 +435,7 @@ InTable:
                 Or      Ah,Ah                   ;Is break bit on? (key release)
                 Js      KeyIntReturn            ;...if it is, ignore and return
                 Jmp     KeyContinue1            ;...else, process non-modifier
+				Nop                             ;TODO: Padding for MASM
 
 ;               ***************************
 ;               *  Process Modifier Keys  *
@@ -532,6 +533,7 @@ KeyContinue4:
                 Jmp     BaseCaseState           ;No shift state active
 ShiftStateShort:
                 Jmp     ShiftState              ;Convert to near jump
+				Nop                             ;TODO: Padding for MASM
 
 
 ;               *************************
@@ -662,6 +664,7 @@ KeyPadContinue:
                 Test    Bl,LeftShiftBit Or RightShiftBit  ;Shifted?
                 Jnz     PadShiftState           ;...Yes, jump
                 Jmp     PadBaseState            ;No shift state active
+				Nop                             ;TODO: Padding for MASM
 PadALTState:
                 Or      Ah,Ah                   ;Affect flags
                 Js      PadReturn               ;...ignore if breaking
@@ -697,6 +700,7 @@ PadControlState:
                 Mov     Bx,Offset PadTable.Control ;Use control table
                 Xlat    Cs:ByteType             ;Translate from scan to data
                 Jmp     KeyBufLoad
+				Nop                             ;TODO: Padding for MASM
 PadBaseState:
                 Cmp     Ah,InsKey Or 80H        ;Breaking INS key?
                 Jne     NotBrkIns               ;...jump if not
@@ -716,12 +720,14 @@ NotInsKey:
                 Mov     Bx,Offset PadTable.Base ;Use base table
                 Xlat    Cs:ByteType             ;Translate from scan to data
                 Jmp     KeyBufLoad
+				Nop                             ;TODO: Padding for MASM
 PadShiftState:
                 Or      Ah,Ah                   ;Affect flags
                 Js      PadReturn               ;...ignore if breaking
                 Mov     Bx,Offset PadTable.Shift ;Use Shift table
                 Xlat    Cs:ByteType             ;Translate from scan to data
                 Jmp     KeyBufLoad
+				Nop                             ;TODO: Padding for MASM
 
 ;               **************************
 ;               *  Load Keyboard Buffer  *
@@ -769,6 +775,7 @@ BufContinue2:
                 Ja      BufLoad                 ;...jump if not and load buffer
                 Add     Al,'a'-'A'              ;Add offset to lower
                 Jmp     BufLoad                 ;...and go load buffer
+				Nop                             ;TODO: Padding for MASM
 
                 ;       Convert Lower to Upper
 
@@ -794,6 +801,7 @@ BufCont2:
                 Cmp     Bx,KeyBufHead           ;Tail = Head?
                 Jne     BufCont3                ;...jump if not
                 Jmp     KeyBeepReturn           ;...else beep and return
+				Nop                             ;TODO: Padding for MASM
 BufCont3:
                 Mov     [Di],Ax                 ;Store scan and ascii in buf.
                 Mov     KeyBufTail,Bx           ;...move the pointer

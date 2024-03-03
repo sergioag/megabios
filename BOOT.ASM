@@ -129,6 +129,7 @@ WhatGives:
                 Push    Cs                      ;Print
                 Pop     Ds                      ;...message
                 Mov     Si,Offset LoadDiskMsg   ;...telling him
+				Nop                             ;TODO: Padding for MASM
                 Call    PrintMessage            ;...to insert diskette
                 Call    Keyin                   ;Get his response
                 Call    ClearScreen             ;Clear the screen

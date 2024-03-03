@@ -1271,6 +1271,7 @@ WriteDot        Proc    Near                    ;Write a dot
                 Ror     Al,1                    ;...move it to upper bit
                 Mov     Ah,01111111B            ;Also shift mask bit same
                 Jmp     WrDotCont2              ;...Continue below
+				Nop                             ;TODO: Padding for MASM
 
                 ;       Write Dot Lo Res
 WrDotLoRes:
@@ -1510,6 +1511,7 @@ ConvertCursor   Proc    Near
                 Shl     Bx,1                    ;...double for word offset
                 Mov     Ax,CursorPosn[Bx]       ;Get and set the cursor
                 Jmp     Convert                 ;Convert xy to linear address
+				Nop                             ;TODO: Padding for MASM
 ConvertCursor   Endp
 
 ;               ***************************

@@ -540,6 +540,7 @@ KeyResetLoop:
                 Add     Ax,32                   ;Length of buffer = 32
                 Mov     BufferEnd,Ax            ;...store it
                 Jmp     OverNMIEntry            ;Jump over PC NMI entry point
+				Nop                             ;TODO: MASM padding
 
                 Org     0E2C3H                  ;Align with PC
 
@@ -655,6 +656,7 @@ ExpansionChk:
                 Call    DWord ptr IOROMInit     ;...and call init code
                 Pop     Dx                      ;Restore pointer
                 Jmp     ROMDone                 ;...and jump, rom init'ted
+				Nop                             ;TODO: Padding for MASM
 ROMErrJmp:
                 Or      MfgErrFlag,IOROMErr     ;Indicate Error
 
@@ -697,6 +699,7 @@ BeepPause:
                 Push    Cs                      ;Load code pointer
                 Pop     Ds                      ;...into data pointer
                 Mov     Si,Offset ErrorMsg      ;Point at error message
+				Nop                             ;TODO: Padding for MASM
                 Call    PrintMessage            ;...and print it
                 Pop     Ds                      ;Restore Ds
 
@@ -717,7 +720,7 @@ BeepPause:
                 Je      BootItUp                ;...jump and continue if yes
                 Cmp     Al,'y'                  ;...y?
                 Je      BootItUp                ;...jump and continue if yes
-                Jmp     ResetEntry              ;Re-boot
+                Jmp     Far Ptr ResetEntry      ;Re-boot
 
 
 BootItUp:
@@ -753,6 +756,7 @@ SysMemTest      Proc    Near
                 Mov     Cx,2007H                ;...by putting it on an
                 Int     TrapVideo               ;...immaginary scan line
                 Mov     Si,Offset MemTstMsg     ;Point at message
+				Nop                             ;TODO: Padding for MASM
                 Push    Ds                      ;Save current Ds
                 Push    Cs                      ;Send message to screen
                 Pop     Ds                      ;...telling about
@@ -796,6 +800,7 @@ SkipFlip:
                 Jnz     OuterMemLoop            ;...jump and loop
                 Pop     Ds                      ;Restore data segment
                 Jmp     TestVidMem              ;...and go test video
+				Nop                             ;TODO: Padding for MASM
 LoadMemErr:
                 Pop     Ds                      ;Restore data segment
                 Assume  Ds:BiosDataArea         ;...and tell ASM86

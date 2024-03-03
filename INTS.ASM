@@ -153,6 +153,7 @@ NMIOccurred:
                 Push    Cs                      ;Load code pointer
                 Pop     Ds                      ;...into data pointer
                 Mov     Si,Offset ParityMsg     ;Print error message:
+				Nop                             ;TODO: Padding for MASM
                 Call    PrintMessage            ;Parity error at: ????? Cont?
                 Pop     Ds                      ;Restore our seg
                 Mov     Ax,0011H                ;Re-position cursor
@@ -194,6 +195,7 @@ ByteLoop:
                 Cmp     Ax,Bx                   ;...compare it to end
                 Jne     ParagraphLoop           ;...and loop till all done
                 Jmp     NoErrorFound            ;...no error detected, return
+				Nop                             ;TODO: Padding for MASM
 FoundError:
                 Mov     [Si],Ah                 ;Set parity in memory
                 Mov     Ax,Ds                   ;Get paragraph value
@@ -207,6 +209,7 @@ NoErrorFound:
                 Push    Cs                      ;Load code pointer
                 Pop     Ds                      ;...into data pointer
                 Mov     Si,Offset ContMsg       ;Print error message:
+				Nop                             ;TODO: Padding for MASM
                 Call    PrintMessage            ; Cont?
                 Pop     Ds                      ;Restore our seg
                 In      Al,PortPicOCW1          ;Get interrupt mask
