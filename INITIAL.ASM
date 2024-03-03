@@ -500,6 +500,9 @@ NoBasic:
 
                 ;       Setup Configuration Data
 
+IF Model eq 0
+                In      Al,PortPPIPortA         ;Read SW1 switches in 5150
+ELSE
                 In      Al,PortPPIPortC         ;Get first 4 switches
                 And     Al,00001111B            ;...into upper
                 Mov     Ah,Al                   ;...Ax
@@ -509,6 +512,7 @@ NoBasic:
                 Mov     Cl,4                    ;Shift it
                 Shl     Al,Cl                   ;...into upper nibble
                 Or      Al,Ah                   ;...and OR with lower switches
+ENDIF
                 Mov     Ah,0                    ;Store configuration
                 Mov     EquipFlag,Ax            ;...word (upper byte = 0)
                 And     Al,00110000B            ;Isolate display bits

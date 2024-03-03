@@ -18,6 +18,16 @@ ENDM Bus
 ;               *  Equates  *
 ;               *************
 
+;               ************************
+;               *  BIOS Model support  *
+;               ************************
+
+Model5150       Equ     0
+Model5160       Equ     1
+Book8088        Equ     2
+
+Model           = Model5160
+
 ;               ******************************
 ;               *  System Board Peripherals  *
 ;               ******************************
@@ -103,10 +113,21 @@ PPIBDisSysParit Equ     00010000B       ;System board parity disable bit
 PPIBDisIOParity Equ     00100000B       ;I/O channel parity disable bit
 PPIBRelKbydClk  Equ     01000000B       ;Keyboard clock line release bit
 PPIBClearKbyd   Equ     10000000B       ;Keyboard clear
+
+IF Model Eq 0                           ;IBM 5150
+PPIBStartUpMode Equ     10101101B       ;PPIBSpkrGate +
+                                        ;...PPIBSpare +
+                                        ;...PPIBDisIOParity +
+										;...Cassette Off +
+                                        ;...PPIBClearKbyd
+
+ELSE                                    ;Everyone else
 PPIBStartUpMode Equ     10100101B       ;PPIBSpkrGate +
                                         ;...PPIBSpare +
                                         ;...PPIBDisIOParity +
                                         ;...PPIBClearKbyd
+ENDIF
+
 ;               ************
 ;               *  Port C  *
 ;               ************
@@ -508,3 +529,4 @@ SioCmdInit      Equ     0
 SioCmdSend      Equ     1
 SioCmdReceive   Equ     2
 SioCmdStatus    Equ     3
+
